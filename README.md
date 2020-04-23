@@ -1,4 +1,4 @@
-# Authentication Token Optain and Replace Extender
+# Authentication Token Obtain and Replace (ATOR) 
 
 The plugin is created to help automated scanning using Burp in the following scenarios:
 1. Access/Refresh token
