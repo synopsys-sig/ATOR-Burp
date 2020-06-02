@@ -1,4 +1,4 @@
-# Authentication Token Obtain and Replace (ATOR) 
+# Authentication Token Optain and Replace Extender
 
 The plugin is created to help automated scanning using Burp in the following scenarios:
 1. Access/Refresh token
@@ -15,8 +15,10 @@ The inspiration for the plugin is from ExtendedMacro plugin: https://github.com/
 
 ## Getting Started
  
-1. Clone the repository
-2. Make a jar file from the cloned project
+1. Install Java and Maven 
+2. Clone the repository
+3. Run the "mvn clean install" command in cloned repo of where pom.xml is present
+4. Take the generated jar with dependencies from the target folder
 
 ### Prerequisites
  
@@ -98,9 +100,6 @@ Idea : Record the Tiredful application request in BURP, configure the ATOR exten
  
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
  
-## Installation
-Plugin jar can be downloaded at bin/ 
-
 ## Versioning
 v1.0 
  
@@ -108,8 +107,13 @@ v1.0
  
 * **https://github.com/FrUh/ExtendedMacro ** - *Initial work*
 
-Authors from Synopsys - Ashwath Reddy (@ka3hk) and Manikandan Rajappan (www.linkedin.com/in/mani2raj)
- 
+Authors from Synopsys - Ashwath Reddy (@ka3hk) and Manikandan Rajappan (@rmanikdn)
+
+## Blogs
+
+1. [Authentication Token Obtain and Replace (ATOR) Burp Plugin - Part1 - Single step login sequence and single token extraction](https://medium.com/@kashwathkumar/authentication-token-obtain-and-replace-ator-burp-plugin-fast-and-reliable-plugin-to-handle-b19e3621c6a7 "ATOR Part 1")
+2. [Authentication Token Obtain and Replace (ATOR) Burp Plugin - Part2 - Multi step login sequence and multiple extraction](https://medium.com/@kashwathkumar/authentication-token-obtain-and-replace-ator-burp-plugin-fast-and-reliable-plugin-to-handle-1d9a0b3054e "ATOR Part 2")
+
 ## License
  
 This software is released by Synopsys under the MIT license.
@@ -121,5 +125,5 @@ ExtendedMacro was a great start - we have modified the UI to handle more complex
 
 ## Demo Video
 
-[ATOR Extender Demo Video](https://www.youtube.com/watch?v=IwKa0F7MmTM "Demo Video")
+[ATOR Extender Demo Video](https://youtu.be/h1p2rvooTL0 "Demo Video")
 
