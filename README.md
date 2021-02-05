@@ -54,7 +54,7 @@ Totally there are 4 different ways you can specify the error condition.
 ### Regex with samples
 
 1. Use Authorization: Bearer \w* to match Authorization: Bearer AXXFFPPNSUSSUSSNSUSN
-2. Use Authentication: Bearer ([\w\+\_\-\.]*) to match Authorization: Bearer AXX-F+FPPNS.USSUSSNSUSN
+2. Use Authorization: Bearer ([\w\+\_\-\.]*) to match Authorization: Bearer AXX-F+FPPNS.USSUSSNSUSN
 
  
 ### Break down into end to end tests
