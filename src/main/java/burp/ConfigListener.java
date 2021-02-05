@@ -23,8 +23,7 @@ public class ConfigListener implements ActionListener {
             Integer.parseInt(s);
 
             return true;
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
@@ -38,26 +37,25 @@ public class ConfigListener implements ActionListener {
         String first_part = splitted[0];
         StringBuilder firstpart = new StringBuilder();
         firstpart.append(splitted[0]);
-        
+
         if (splitted.length > 1 && isDigit(splitted[1])) {
             c = Integer.parseInt(splitted[1]);
 
             while (all.get(name) != null) {
-            	firstpart.append(" ");
-            	firstpart.append(++c);
-            	name = firstpart.toString();
+                firstpart.append(" ");
+                firstpart.append(++c);
+                name = firstpart.toString();
             }
-        }
-        else {
+        } else {
             c = 1;
             firstpart.append(" ");
             firstpart.append(c);
             name = firstpart.toString();
 
             while (all.get(name) != null) {
-            	firstpart.append(" ");
-            	firstpart.append(++c);
-            	name = firstpart.toString();
+                firstpart.append(" ");
+                firstpart.append(++c);
+                name = firstpart.toString();
             }
         }
         return name;
@@ -71,28 +69,27 @@ public class ConfigListener implements ActionListener {
         String[] splitted = name.split(" ");
         StringBuilder firstpart = new StringBuilder();
         firstpart.append(splitted[0]);
-        
+
         String first_part = splitted[0];
 
         if (splitted.length > 1 && isDigit(splitted[1])) {
             c = Integer.parseInt(splitted[1]);
 
             while (all.get(name) != null) {
-            	firstpart.append(" ");
-            	firstpart.append(++c);
-            	name = firstpart.toString();
+                firstpart.append(" ");
+                firstpart.append(++c);
+                name = firstpart.toString();
             }
-        }
-        else {
+        } else {
             c = 1;
             firstpart.append(" ");
             firstpart.append(c);
             name = firstpart.toString();
 
             while (all.get(name) != null) {
-            	firstpart.append(" ");
-            	firstpart.append(++c);
-            	name = firstpart.toString();
+                firstpart.append(" ");
+                firstpart.append(++c);
+                name = firstpart.toString();
             }
         }
         return name;
@@ -124,14 +121,14 @@ public class ConfigListener implements ActionListener {
                 break;
 
             case A_SEL_CHANGED_EXT:
-//                if (extender.getExtractComboBox().getSelectedItem() != null) {
-//                    Extraction extModel = extender.getExtModelMap().get(
-//                            extender.getExtractComboBox().getSelectedItem());
-//                    extender.getExtractionNameStringField().setText(extModel.getId());
-//                    extender.getStartStringField().setText(extModel.getStartString());
-//                    extender.getStopStringField().setText(extModel.getStopString());
-//                    extender.getExtMessagesTable().setSelectionById(extModel.getMsgId());
-//                }
+                // if (extender.getExtractComboBox().getSelectedItem() != null) {
+                // Extraction extModel = extender.getExtModelMap().get(
+                // extender.getExtractComboBox().getSelectedItem());
+                // extender.getExtractionNameStringField().setText(extModel.getId());
+                // extender.getStartStringField().setText(extModel.getStartString());
+                // extender.getStopStringField().setText(extModel.getStopString());
+                // extender.getExtMessagesTable().setSelectionById(extModel.getMsgId());
+                // }
                 break;
 
             case A_CREATE_NEW_REP:
@@ -142,8 +139,8 @@ public class ConfigListener implements ActionListener {
                     name = getNextRepName(name, extender.getReplaceModel().getRepModelMap());
                     extender.getReplaceNameStringField().setText(name);
 
-                    Extraction ext = extender.getExtractionModel().getExtraction(
-                            extender.getExtractionTable().getSelectedRow());
+                    Extraction ext = extender.getExtractionModel()
+                            .getExtraction(extender.getExtractionTable().getSelectedRow());
                     Replace rep = new Replace(name, extender.getReplaceStringField().getText(),
                             extender.getReplaceType().getSelectedItem().toString(), ext);
                     rep.setUrlDecode(extender.getReplaceUrlDecodeCheckbox().isSelected());
@@ -151,16 +148,15 @@ public class ConfigListener implements ActionListener {
                     ext.getRepRefSet().add(name);
 
                     // set rep messageId and reference to msg
-                    if (extender.getReplaceType().getSelectedItem().toString() == Replace.TYPE_ADD_SEL ||
-                            extender.getReplaceType().getSelectedItem().toString() == Replace.TYPE_REP_SEL) {
+                    if (extender.getReplaceType().getSelectedItem().toString() == Replace.TYPE_ADD_SEL
+                            || extender.getReplaceType().getSelectedItem().toString() == Replace.TYPE_REP_SEL) {
                         Message selectedMsg = extender.getRepMessagesController().getSelectedMessage();
                         selectedMsg.getRepRefSet().add(rep.getId());
-                        
+
                         rep.setMsgId(selectedMsg.getId());
 
                         extender.getReplaceModel().addReplace(rep);
-                    }
-                    else {
+                    } else {
                         rep.setMsgId("Burp");
                         extender.getReplaceModel().addReplaceLast(rep);
                     }
@@ -169,24 +165,24 @@ public class ConfigListener implements ActionListener {
                 break;
 
             case A_SEL_CHANGED_REP:
-//                if (extender.getReplaceComboBox().getSelectedItem() != null) {
-//                    Replace repModel = extender.getRepModelMap().get(
-//                            extender.getReplaceComboBox().getSelectedItem());
-//                    extender.getReplaceNameStringField().setText(repModel.getId());
-//                    extender.getReplaceStringField().setText(repModel.getReplaceStr());
-//                    extender.getRepMessagesTable().setSelectionById(repModel.getMsgId());
-//                }
+                // if (extender.getReplaceComboBox().getSelectedItem() != null) {
+                // Replace repModel = extender.getRepModelMap().get(
+                // extender.getReplaceComboBox().getSelectedItem());
+                // extender.getReplaceNameStringField().setText(repModel.getId());
+                // extender.getReplaceStringField().setText(repModel.getReplaceStr());
+                // extender.getRepMessagesTable().setSelectionById(repModel.getMsgId());
+                // }
                 break;
 
             case A_START_STOP_CHANGED:
-                if (!extender.getStartStringField().getText().isEmpty() &&
-                        !extender.getStopStringField().getText().isEmpty() &&
-                        extender.getExtMessagesTable().getSelectedRow() >= 0) {
-                    extender.getExtractedStringField().setText(Extraction.extractData(
-                            extender.getExtMessagesController().getSelectedMessageInfo().getResponse().toString(),
-                            extender.getStartStringField().getText(),
-                            extender.getStopStringField().getText()
-                    ));
+                if (!extender.getStartStringField().getText().isEmpty()
+                        && !extender.getStopStringField().getText().isEmpty()
+                        && extender.getExtMessagesTable().getSelectedRow() >= 0) {
+                    extender.getExtractedStringField()
+                            .setText(Extraction.extractData(
+                                    extender.getExtMessagesController().getSelectedMessageInfo().getResponse()
+                                            .toString(),
+                                    extender.getStartStringField().getText(), extender.getStopStringField().getText()));
                 }
                 break;
 
@@ -214,16 +210,23 @@ public class ConfigListener implements ActionListener {
                 String startStop[] = null;
 
                 if (extender.getExtResponseEditor().getSelectedData() != null) {
-                	int[] bounds = extender.getExtResponseEditor().getSelectionBounds();
+                    int[] bounds = extender.getExtResponseEditor().getSelectionBounds();
                     String selected = new String(extender.getExtResponseEditor().getSelectedData());
                     startStop = ExtStringCreator.getStartStopString(selected,
                             new String(extender.getExtResponseEditor().getMessage()), bounds);
+                    int stepcount = 0;
+                    while ((startStop == null) && (stepcount < 5)) {
+                        ExtStringCreator.STEP += 2;
+                        startStop = ExtStringCreator.getStartStopString(selected,
+                                new String(extender.getExtResponseEditor().getMessage()), bounds);
+                        stepcount += 1;
+                    }
+                    ExtStringCreator.STEP = 8;
                 }
                 if (startStop != null) {
                     extender.getStartStringField().setText(startStop[0]);
                     extender.getStopStringField().setText(startStop[1]);
-                }
-                else {
+                } else {
                     extender.getStartStringField().setText("");
                     extender.getStopStringField().setText("");
                     extender.getExtractedStringField().setText("");
@@ -232,12 +235,11 @@ public class ConfigListener implements ActionListener {
 
             case A_REP_FROM_SELECTION:
                 if (extender.getRepRequestEditor().getSelectedData() != null) {
-                    extender.getReplaceStringField().setText(
-                            new String(extender.getRepRequestEditor().getSelectedData()));
-                    extender.stdout.println("ext"+extender.getReplaceType().getSelectedItem().toString());
-                    
-                }
-                else {
+                    extender.getReplaceStringField()
+                            .setText(new String(extender.getRepRequestEditor().getSelectedData()));
+                    extender.stdout.println("ext" + extender.getReplaceType().getSelectedItem().toString());
+
+                } else {
                     extender.getReplaceStringField().setText("");
                 }
 
@@ -248,23 +250,17 @@ public class ConfigListener implements ActionListener {
 
                 break;
             case A_REVOKE_TOKEN:
-            	if (extender.getToken().size() > 0) {
-            		extender.revokeToken();
-            		JOptionPane.showMessageDialog(null, 
-                            "Token got revoked", 
-                            "Revoke Token", 
+                if (extender.getToken().size() > 0) {
+                    extender.revokeToken();
+                    JOptionPane.showMessageDialog(null, "Token got revoked", "Revoke Token",
                             JOptionPane.INFORMATION_MESSAGE);
-            	}
-            	else{
-            		JOptionPane.showMessageDialog(null, 
-                            "No token to revoke", 
-                            "Revoke Token", 
+                } else {
+                    JOptionPane.showMessageDialog(null, "No token to revoke", "Revoke Token",
                             JOptionPane.WARNING_MESSAGE);
-            	}
-            	
-            	break;
-            	
-            
+                }
+
+                break;
+
         }
     }
 }
