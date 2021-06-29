@@ -128,3 +128,13 @@ ExtendedMacro was a great start - we have modified the UI to handle more complex
 
 [ATOR Extender Demo Video](https://youtu.be/h1p2rvooTL0 "Demo Video")
 
+### ATOR v2.0.0.:
+
+UI Panel was splitted into 4 different configuration
+1. Error Condition - Find the error condition req/res and add trigger condition [Can be statuscode/text in body content/text in header]. Multiple condition can also be added.
+2. Obtain Token: Find all the req/res to get the token. It can be single or multiple request (do replacement accordingly)
+3. Error Condition Replacement: Mark the trigger condition and also mark the place on request where replacement needs to taken (map the extraction)
+4. Preview: Dry run it before configure for scan.
+
+  
+
