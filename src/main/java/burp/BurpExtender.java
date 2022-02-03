@@ -805,6 +805,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 		errormsgType.append("&nbsp;&nbsp;&nbsp;&nbsp;b) st= 401 || st=404 && bd=\"The data access key\"</html>");
 
 		JLabel errorlabel = new JLabel(errormsgType.toString());
+		errorlabel.putClientProperty("html.disable", null);
         JLabel errorregexpattern = new JLabel("Replacement Regex Pattern");
         errorregexpattern.setAlignmentX(Component.LEFT_ALIGNMENT);
         errorregexpattern.setForeground(BURP_ORANGE);
@@ -815,6 +816,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
         replceregexPattn.append("<html>i)&nbsp;&nbsp;Use this [/\\+\\w\\-\\.\\=]* pattern if you want to match only text or combination of text and special character (.,\\,+,-,= )<br />");
         replceregexPattn.append("ii)&nbsp;Add any special character inside squarebracket[] to match the response</html>");
         JLabel reg = new JLabel(replceregexPattn.toString());
+        reg.putClientProperty("html.disable", null);
 
         
         
