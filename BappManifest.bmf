@@ -2,11 +2,12 @@ Uuid: 51327b097b354243b307b4ed87ba39eb
 ExtensionType: 1
 Name: Authentication Token Obtain and Replace
 RepoName: ator
-ScreenVersion: 2.0
-SerialVersion: 1
+ScreenVersion: 2.0a
+SerialVersion: 3
 MinPlatformVersion: 0
 ProOnly: False
 Author: Synopsis-Sig
 ShortDescription: Helps automated scanning accessing/refreshing tokens, replacing tokens in XML and JSON body,replacing tokens in cookies.
 EntryPoint: target/ATOR-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 BuildCommand: mvn clean install
+SupportedProducts: Pro, Community
