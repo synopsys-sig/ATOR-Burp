@@ -1,8 +1,10 @@
 package burp;
+
+import java.util.Arrays;
+
 public class ExtStringCreator {
-    public static  int STEP = 8;
+    public static  int STEP = 6;
     public static String[] getStartStopString(String selectedText, String wholeText, int[] bounds) {
-    	
     	String[] ret = new String[2];
         ret[0] = ret[1] = null;
 
@@ -13,7 +15,6 @@ public class ExtStringCreator {
         int stopIndex = bounds[1];
         int sI = moveIndex(startIndex, true, wholeText.length());
         int eI = moveIndex(stopIndex, false, wholeText.length());
-
         int tmpsI;
         int tmpeI;
         boolean changed = true;
@@ -25,12 +26,10 @@ public class ExtStringCreator {
             // we found what is selected
             String matched= extractData(wholeText, ret[0], ret[1]);
             if (selectedText.equals(matched)) {
-            	System.out.println("1...");
                 break;
             }
             
             else {
-            	System.out.println("2...");
                 ret[0] = ret[1] = null;
             }
             tmpsI = sI;
@@ -88,5 +87,60 @@ public class ExtStringCreator {
             }
         }
         return index;
+    }
+    public static String[] extractheader(String selectedText, String wholeText) {
+    	String[] ret = new String[2];
+        ret[0] = ret[1] = null;
+        if (selectedText.equals("") || selectedText == null) {
+            return null;
+        }
+        String[] inputSplitNewLine = wholeText.split("\\n");
+        for(int i=0; i<inputSplitNewLine.length; i++){
+            boolean result = inputSplitNewLine[i].contains(selectedText);
+            if(result) {
+            	String[] matchedLine =inputSplitNewLine[i].split(" ");
+            	ret[0] = inputSplitNewLine[i];
+            	ret[1] = matchedLine[0];
+            
+//                for(int j=0; j<matchedLine.length; j++){
+//                    boolean stringMatch = matchedLine[j].strip().equals(selectedText.strip());
+//                	if(stringMatch) {
+//                	} 		
+//                }
+            }
+        	
+        }
+        return ret;
+    }
+    public static String[] getStartStopStringAtEnd(String selectedText, String wholeText, int[] bounds) {
+    	String[] ret = new String[2];
+        ret[0] = ret[1] = null;
+
+        if (selectedText.equals("") || selectedText == null) {
+            return null;
+        }
+        int startIndex = bounds[0];
+        int stopIndex = bounds[1];
+        int sI = moveIndex(startIndex, true, wholeText.length());
+        int eI = moveIndex(stopIndex, false, wholeText.length());
+        boolean changed = true;
+        int i = 0;
+        while (changed) {
+        	ret[0] = wholeText.substring(sI, startIndex);
+            ret[1] = wholeText.substring(stopIndex, eI);
+            String matched = wholeText.substring(startIndex, stopIndex);
+            if (selectedText.equals(matched)) {
+                break;
+            }
+            
+            else {
+                ret[0] = ret[1] = null;
+            }
+        }
+        if (ret[0] == null) {
+            return null;
+        }
+        
+        return ret;
     }
 }

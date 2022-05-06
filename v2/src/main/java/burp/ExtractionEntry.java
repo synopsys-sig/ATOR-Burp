@@ -3,7 +3,9 @@ package burp;
 public class ExtractionEntry {
 	IBurpExtenderCallbacks callbacks;
 	String name, extractionmsgID;
-	String startString, stopString, selectedText, isUrldecode, value;
+	String startString, stopString, selectedText, value;
+	String  isencode_decode = "NA";
+	boolean clearWhiteSpaces = false;
 	
 	public ExtractionEntry(IBurpExtenderCallbacks callbacks, String name, String extractionmsgID) {
 		this.callbacks = callbacks;
@@ -20,8 +22,5 @@ public class ExtractionEntry {
 	public String getextractionmsgID() {
 		return this.extractionmsgID;
 	}
-	
-	 
-	
 	
 }

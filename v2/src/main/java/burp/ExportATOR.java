@@ -163,7 +163,7 @@ public class ExportATOR {
 			jsonObject.put("startString", extractionEntry.startString);
 			jsonObject.put("stopString", extractionEntry.stopString);
 			jsonObject.put("selectedtext", extractionEntry.selectedText);
-			jsonObject.put("isUrlDecode", extractionEntry.isUrldecode);
+			jsonObject.put("isUrlDecode", extractionEntry.isencode_decode);
 			
 			jsonArray.add(jsonObject);
 		}
@@ -199,7 +199,7 @@ public class ExportATOR {
 			
 			jsonObject.put("Name", replaceEntry.getName());
 			jsonObject.put("ExtractionName", replaceEntry.getextractionName());
-			
+			jsonObject.put("headerName", replaceEntry.headerName);
 			jsonObject.put("startString", replaceEntry.startString);
 			jsonObject.put("stopString", replaceEntry.stopString);
 			jsonObject.put("selectedText", replaceEntry.selectedText);

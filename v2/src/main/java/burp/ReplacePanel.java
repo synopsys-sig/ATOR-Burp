@@ -24,7 +24,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.commons.lang3.SerializationUtils;
 
 public class ReplacePanel {
@@ -32,7 +31,7 @@ public class ReplacePanel {
 	private static Color BURP_ORANGE = new Color(255, 128, 0);
 	private Font headerFont = new Font("Nimbus", Font.BOLD, 16);
 	public static IMessageEditor ireqMessageEditor, iresMessageEditor;
-	public static JTextField extractionNameStringField, startStringField, stopStringField, extractedStringField;
+	public static JTextField extractionNameStringField, startStringField, stopStringField, extractedStringField, headerField;
 	private JButton addMultipleCondition = new JButton("ADD");
 	private Font reqresheaderFont = new Font("Nimbus", Font.BOLD, 16);
 	public static ReplaceTable replaceTable;
@@ -387,7 +386,7 @@ public class ReplacePanel {
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 		leftPanel.setBorder(new EmptyBorder(5, 15, 5, 15));
-		leftPanel.setPreferredSize(new Dimension(600, 300));
+		leftPanel.setPreferredSize(new Dimension(600, 400));
         
 		JLabel reqlabel = new JLabel("Request");
 		reqlabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -404,7 +403,7 @@ public class ReplacePanel {
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		rightPanel.setBorder(new EmptyBorder(5, 15, 5, 15));
-		rightPanel.setPreferredSize(new Dimension(600, 300));
+		rightPanel.setPreferredSize(new Dimension(600, 400));
         
 		JLabel reslabel = new JLabel("Response");
 		reslabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -438,6 +437,8 @@ public class ReplacePanel {
         extractedStringField = new JTextField();
         extractedStringField.setEditable(false);
         extractedStringField.setPreferredSize(new Dimension(150, 35));
+        headerField = new JTextField();
+        headerField.setPreferredSize(new Dimension(150, 35));
         
         extractionreplaceComboNameList.setPreferredSize(new Dimension(150, 35));
         extractionreplaceComboNameList.addItem("NA");
@@ -450,6 +451,8 @@ public class ReplacePanel {
                 new ConfigChangedListener(ConfigActions.A_EXT_ERROR_CONFIG_CHANGED));
         extractionNameStringField.getDocument().addDocumentListener(
                 new ConfigChangedListener(ConfigActions.A_EXT_ERROR_VALIDITY));
+        headerField.getDocument().addDocumentListener(
+                new ConfigChangedListener(ConfigActions.A_EXT_ERROR_CONFIG_CHANGED));
         
         extractionreplaceComboNameList.addItemListener(new ConfigChangedListener(ConfigActions.A_EXT_COMBO_CHNAGED_ON_SPOTERROR));
         
@@ -463,6 +466,8 @@ public class ReplacePanel {
         extButtonsPane.add(extractedStringField);
         extButtonsPane.add(new JLabel("Extraction name:"));
         extButtonsPane.add(extractionreplaceComboNameList);
+		extButtonsPane.add(new JLabel("Header:"));
+        extButtonsPane.add(headerField);
         
         extCreateButton = new JButton("Add");
         extCreateButton.addActionListener(new MenuAllListener(callbacks, MenuActions.ADD_EXTRACTION_FOR_REP_ITEM, this));
@@ -513,7 +518,7 @@ public class ReplacePanel {
 				
 			}
 		});
-		
+
 		callbacks.customizeUiComponent(extPopupMenu);
 		
 		replaceTableModel = new ReplaceTableModel(replaceEntrylist);

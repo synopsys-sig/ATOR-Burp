@@ -8,7 +8,7 @@ public class AddEntryToExtractionListSpotError {
 		String stopString = ReplacePanel.stopStringField.getText();
 		String extractedString = ReplacePanel.extractedStringField.getText();
 		String extractionListName = (String) ReplacePanel.extractionreplaceComboNameList.getSelectedItem();
-		
+		String headerString = ReplacePanel.headerField.getText();
 		if((!extractedName.isEmpty()) && 
 				(!startString.isEmpty()) && 
 				(!stopString.isEmpty()) && 
@@ -21,9 +21,9 @@ public class AddEntryToExtractionListSpotError {
 			replaceEntry.startString = startString;
 			replaceEntry.stopString = stopString;
 			replaceEntry.selectedText = extractedString;
-			
+			replaceEntry.headerName = headerString;
+
 			String request = callbacks.getHelpers().bytesToString(ReplacePanel.ireqMessageEditor.getMessage());
-			
 			ReplacePanel.replaceEntrylist.add(replaceEntry);
 			
 			ReplacePanel.replaceTableModel.fireTableRowsInserted(ReplacePanel.replaceTableModel.getRowCount() - 1, 
@@ -38,7 +38,8 @@ public class AddEntryToExtractionListSpotError {
 		String stopString = ReplacePanel.stopStringField.getText();
 		String extractedString = ReplacePanel.extractedStringField.getText();
 		String extractionListName = (String) ReplacePanel.extractionreplaceComboNameList.getSelectedItem();
-		
+		String headerString = ReplacePanel.headerField.getText();
+
 		if((!extractedName.isEmpty()) && 
 				(!startString.isEmpty()) && 
 				(!stopString.isEmpty()) && 
@@ -60,6 +61,7 @@ public class AddEntryToExtractionListSpotError {
 		ReplacePanel.stopStringField.setText("");
 		ReplacePanel.extractedStringField.setText("");
 		ReplacePanel.extractionreplaceComboNameList.setSelectedItem("NA");
+		ReplacePanel.headerField.setText("");
 		
 	}
 	

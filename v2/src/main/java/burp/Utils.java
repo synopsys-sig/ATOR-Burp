@@ -1,6 +1,7 @@
 package burp;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class Utils {
 	static Color BURP_ORANGE = new Color(255, 128, 0);
@@ -40,5 +41,23 @@ public class Utils {
         }
         return -1;
     }
+    
+    public static byte[] checkContentLength(byte[] request, IExtensionHelpers helpers) {
+		IRequestInfo iRequestInfo = (IRequestInfo) helpers.analyzeRequest(request);
+		String requestData = helpers.bytesToString(request);
+		String body = requestData.substring(iRequestInfo.getBodyOffset(), requestData.length());
+		List<String> headers = (List<String>) iRequestInfo.getHeaders();
+		
+		for(String header: headers) {
+			if(header.contains("Content-Length")) {
+				headers.remove(header);
+				headers.add("Content-Length: "+ body.length());
+				break;
+			}
+		}
+		
+		byte[] updatedrequest = helpers.buildHttpMessage(headers, helpers.stringToBytes(body));
+		return updatedrequest;
+	}
 
 }

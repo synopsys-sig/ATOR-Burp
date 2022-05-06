@@ -192,7 +192,7 @@ public class ImportATOR {
 		replaceEntry.startString = (String) jsonObject.get("startString");
 		replaceEntry.stopString = (String) jsonObject.get("stopString");
 		replaceEntry.selectedText = (String) jsonObject.get("selectedText");
-		
+		replaceEntry.headerName = (String) jsonObject.get("headerName");
 		ReplacePanel.replaceEntrylist.add(replaceEntry);
 		
 		ReplacePanel.replaceTableModel.fireTableRowsInserted(ReplacePanel.replaceTableModel.getRowCount() - 1, 
@@ -251,7 +251,7 @@ public class ImportATOR {
 		extractionEntry.startString = (String)jsonObject.get("startString");
 		extractionEntry.stopString = (String)jsonObject.get("stopString");
 		extractionEntry.selectedText = (String)jsonObject.get("selectedtext");
-		extractionEntry.isUrldecode = (String)jsonObject.get("isUrldecode");
+		extractionEntry.isencode_decode = (String)jsonObject.get("isUrlDecode");
 		
 		ObtainPanel.extractionEntrylist.add(extractionEntry);
 		ObtainPanel.extractionListComboBox.addItem(extractedName);
