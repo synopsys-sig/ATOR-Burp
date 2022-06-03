@@ -1,5 +1,5 @@
 package burp;
-
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -89,14 +89,6 @@ public class MenuAllListener implements ActionListener{
                 startStop = ExtStringCreator.getStartStopString(selected,
                         new String(this.obtainPanel.iresMessageEditor.getMessage()), bounds);
                 
-            	int i = 0;
-            	
-            	while((startStop == null) && (i <= 5) ) {
-            		ExtStringCreator.STEP += 2;
-            		startStop = ExtStringCreator.getStartStopString(selected,
-                            new String(this.obtainPanel.iresMessageEditor.getMessage()), bounds);
-            		i += 1;
-            	}
                 
             }
             if (startStop != null) {
@@ -134,18 +126,9 @@ public class MenuAllListener implements ActionListener{
                 repselected = new String(this.obtainPanel.ireqMessageEditor.getSelectedData());
                 repstartStop = ExtStringCreator.getStartStopString(repselected,
                         new String(this.obtainPanel.ireqMessageEditor.getMessage()), bounds);
-                
-            	int i = 0;
-            	
-            	while((repstartStop == null) && (i <= 5) ) {
-            		ExtStringCreator.STEP += 2;
-            		repstartStop = ExtStringCreator.getStartStopString(repselected,
-                            new String(this.obtainPanel.ireqMessageEditor.getMessage()), bounds);
-            		i += 1;
-            	}
-                
+
+
             }
-            callbacks.printOutput(" **** REP SelectedString *******"+ repselected);
             if (repstartStop != null) {
             	this.obtainPanel.replacementNameStringField.setText("");
             	this.obtainPanel.repstartStringField.setText(repstartStop[0]);
@@ -176,32 +159,37 @@ public class MenuAllListener implements ActionListener{
 			AddEntryToExtractionListSpotError.clearAll();
 			break;
 		case FROM_SELECTION_EXTRACTION_FOR_REP:
-			// Extract start,stop string 
+			// Extract start,stop string
 			String repextstartStop[] = null;
             String repextselected = null;
-            
+            String repextheader [] = null;
+        	int[] bounds = new int[2];
+        	bounds[0] = bounds[1] = 0;
+
             if (this.replacePanel.ireqMessageEditor.getSelectedData() != null) {
-            	
-            	int[] bounds = this.replacePanel.ireqMessageEditor.getSelectionBounds();
-                repextselected = new String(this.replacePanel.ireqMessageEditor.getSelectedData());
-                repextstartStop = ExtStringCreator.getStartStopString(repextselected,
-                        new String(this.replacePanel.ireqMessageEditor.getMessage()), bounds);
                 
-            	int i = 0;
+                repextselected = new String(this.replacePanel.ireqMessageEditor.getSelectedData());
             	
-            	while((repextstartStop == null) && (i <= 5) ) {
-            		ExtStringCreator.STEP += 2;
-            		repextstartStop = ExtStringCreator.getStartStopString(repextselected,
-                            new String(this.replacePanel.ireqMessageEditor.getMessage()), bounds);
-            		i += 1;
-            	}
+                repextheader = ExtStringCreator.extractheader(repextselected,
+                        new String(this.replacePanel.ireqMessageEditor.getMessage()));
+
+                bounds[0] = repextheader[0].indexOf(repextselected);
+                bounds[1] = bounds[0] + repextselected.length();
+                repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
+                		repextheader[0], bounds);
                 
             }
             if (repextstartStop != null) {
             	this.replacePanel.extractionNameStringField.setText("");
             	this.replacePanel.startStringField.setText(repextstartStop[0]);
-            	this.replacePanel.stopStringField.setText(repextstartStop[1]);
+            	if (repextstartStop[1] != null && repextstartStop[1].length() != 0) {
+            		this.replacePanel.stopStringField.setText(repextstartStop[1]);
+            	}
+            	else {
+            		this.replacePanel.stopStringField.setText("EOL");
+            	}
             	this.replacePanel.extractedStringField.setText(repextselected);
+            	this.replacePanel.headerField.setText(repextheader[1]);
             }
             else {
             	// If plugin not able to find start and end string from response,
@@ -210,6 +198,7 @@ public class MenuAllListener implements ActionListener{
             	this.replacePanel.startStringField.setText("");
             	this.replacePanel.stopStringField.setText("");
             	this.replacePanel.extractedStringField.setText("");
+            	this.replacePanel.headerField.setText("");
             	JOptionPane.showMessageDialog(null, 
                         "Manually copy the Start & End string from Request and add it to token replacement list", 
                         "Extraction Operation Failed ", 

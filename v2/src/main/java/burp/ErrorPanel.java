@@ -99,10 +99,7 @@ public class ErrorPanel {
 		borderLayoutsepdown.setLayout(new BorderLayout());
 		borderLayoutsepdown.add(getSeperatorPanel(), BorderLayout.PAGE_START);
 		errorPanel.add(borderLayoutsepdown);
-		
-		
 
-		
 		JPanel tablePaneldown = new JPanel();
 		tablePaneldown.setLayout(new BoxLayout(tablePaneldown, BoxLayout.Y_AXIS));
 		tablePaneldown.setBorder(new EmptyBorder(5, 15, 5, 15));

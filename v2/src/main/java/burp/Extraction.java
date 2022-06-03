@@ -1,5 +1,7 @@
 package burp;
 
+import java.util.Arrays;
+
 public class Extraction {
 	
     public static String extractData(String response, String startString, String stopString, String ret) {
@@ -33,6 +35,31 @@ public class Extraction {
         return ret;
     }
     
+    public static String extractingDataInSpotError(String request, String startString, String stopString, String headerName, String ret) {
+    	String[] requestSplitNewLine = request.split("\\n");
+        for(int i=0; i<requestSplitNewLine.length; i++){
+            boolean result = requestSplitNewLine[i].contains(headerName);
+            if(result) {
+            	int index_of_start = requestSplitNewLine[i].indexOf(startString);
+                if (index_of_start >= 0) {
+                    String tmp_part = requestSplitNewLine[i].substring(index_of_start + startString.length());
+                    if (stopString.matches("EOL")){
+                    	ret = tmp_part;
+                    }
+                    else {
+                    	int index_of_stop = tmp_part.indexOf(stopString);
+                        if (index_of_stop >= 0) {
+                            ret = tmp_part.substring(0, index_of_stop);
+                        }
+                    }
+                }
+                		
+                }
+            }
+        ret = removeemptyCharacter(ret);
+        return ret;
+    }
+    
     public static String removeemptyCharacter(String text) {
     	text = text.replaceAll("\r", "");
     	text = text.replaceAll("\n", "");
@@ -40,6 +67,14 @@ public class Extraction {
     	
     	return text;
     }
+
+	public static String removeemptyCharacterNotSpaces(String text) {
+		text = text.replaceAll("\r", "");
+		text = text.replaceAll("\n", "");
+		text = text.strip();
+		
+		return text;
+	}
     public static String findNextStringAfterStartString(String request, String startString, String extractedString) {
     	int index_of_start = request.indexOf(startString);
     	String nextCharAftrStart = "";

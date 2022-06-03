@@ -1,7 +1,6 @@
 package burp;
 
 import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
 
 public class ObtainTableModel extends AbstractTableModel{

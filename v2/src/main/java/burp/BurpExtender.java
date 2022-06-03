@@ -14,8 +14,8 @@ import java.util.List;
 public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  IHttpListener {
 	
 	
-    private static String EXTENSION_NAME = "ATOR v2.0.0";
-    private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.0.0";
+    private static String EXTENSION_NAME = "ATOR v2.1.0";
+    private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.1.0";
     public static SpotErrorMetaData spoterroMetaData = null;;
     public static IBurpExtenderCallbacks callbacks;
     IExtensionHelpers helpers;
@@ -53,6 +53,12 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 
 	@Override
 	public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse messageInfo) {
+		/**
+		 * This method is used to process all http request and response by any source.
+		 * Alerting/modifying request and response can happen in this function.
+		 * All the request will get replaced by Regex pattern if any extraction and replacement are configured.
+		 * Evaluate the error condition from response and execute ATOR Macro
+		 */
 		IRequestInfo reqInfo = helpers.analyzeRequest(messageInfo);
     	if(!SetttingsTab.isToolEnabled(toolFlag)) {
 			return;
@@ -68,14 +74,15 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 		if(! PreviewPanel.isPreviewEnabled) {
 			if(messageIsRequest) {
 				String newRequest = ExecuteATORMacro.replaceOnRequest(messageInfo);
-				messageInfo.setRequest(newRequest.getBytes());
+				IExtensionHelpers helpers = callbacks.getHelpers();
+				byte[] updatedRequest = Utils.checkContentLength(newRequest.getBytes(), helpers);
+				messageInfo.setRequest(updatedRequest);
 				
 			}
 			if(!(messageIsRequest) && (lockATOR)) {
 				
 				boolean isConditionMatached = CheckCondition.evaluteErrorCondition(messageInfo);
 				
-				BurpExtender.callbacks.printOutput("Error condition matched-->"+ isConditionMatached);
 				if(isConditionMatached) {
 					lockATOR = false;
 					ExecuteATORMacro executeATORMacro = new ExecuteATORMacro(callbacks);
@@ -83,8 +90,10 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 					
 					IHttpService iHttpService = messageInfo.getHttpService();
 					String newRequestafterATORMacro = ExecuteATORMacro.replaceOnRequest(messageInfo);
-					IHttpRequestResponse updatedHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(iHttpService, newRequestafterATORMacro.getBytes());
+					IExtensionHelpers helpers = callbacks.getHelpers();
 					
+					byte[] updatedRequest = Utils.checkContentLength(helpers.stringToBytes(newRequestafterATORMacro), helpers);
+					IHttpRequestResponse updatedHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(iHttpService, updatedRequest);
 					messageInfo.setResponse(updatedHttpRequestResponse.getResponse());
 					lockATOR = true;
 				}
@@ -113,6 +122,10 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 	}
 
 	private void panelCreation() {
+		/**
+		 * Panel for Error Condition, Obtain Token, Error Condition Replacement and Preview.
+		 * 
+		 */
 		errorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		tokenObtainPanel = new JPanel();
 		replacePanel = new JPanel();

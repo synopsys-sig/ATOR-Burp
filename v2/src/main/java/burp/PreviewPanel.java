@@ -36,11 +36,9 @@ public class PreviewPanel {
 	IBurpExtenderCallbacks callbacks;
 	BurpExtender extender;
 	private static Color BURP_ORANGE = new Color(255, 128, 0);
-	
 	private static Color BURP_RED = new Color(255, 0, 0);
 	private static Color BURP_YELLOW = new Color(255, 255, 0);
 	private static Color BURP_GREEN= new Color(0, 100, 0);
-	
 	private Font headerFontmain = new Font("Nimbus", Font.BOLD, 16);
 	private Font headerFont = new Font("Nimbus", Font.BOLD, 14);
 	public static boolean isPreviewEnabled, isErrorConditionMatched = false;
@@ -333,8 +331,8 @@ public class PreviewPanel {
 		String requestmsg = BurpExtender.callbacks.getHelpers().bytesToString(BurpExtender.spoterroMetaData.request);
 		for(ReplaceEntry rep: ReplacePanel.replaceEntrylist) {
 			String extractionName = rep.getextractionName();
-			String extracted = Extraction.extractDataInSpotError(requestmsg, rep.startString, rep.stopString, "Ext ERR on SPOT");
 			// TODO
+			String extracted =  BurpExtender.callbacks.getHelpers().bytesToString(ReplacePanel.ireqMessageEditor.getSelectedData());
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
@@ -345,8 +343,11 @@ public class PreviewPanel {
 				}
 			}
 		}
+
+		IExtensionHelpers helpers = BurpExtender.callbacks.getHelpers();
+		byte[] updatedRequest = Utils.checkContentLength(requestmsg.getBytes(), helpers);
 		IHttpRequestResponse iHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(BurpExtender.spoterroMetaData.iHttpService, 
-				requestmsg.getBytes());
+				updatedRequest);
 		PreviewPanel.ireqmodifiedMessageEditor.setMessage(iHttpRequestResponse.getRequest(), true);
 		PreviewPanel.iresmodifiedMessageEditor.setMessage(iHttpRequestResponse.getResponse(), false);
 		

@@ -22,7 +22,7 @@ public class ExtractionTable extends JTable{
 				ObtainPanel.startStringField.setText(entry.startString);
 				ObtainPanel.stopStringField.setText(entry.stopString);
 				ObtainPanel.extractedStringField.setText(entry.selectedText);
-				ObtainPanel.urldecodeComboBox.setSelectedItem(entry.isUrldecode);
+				ObtainPanel.urldecodeComboBox.setSelectedItem(entry.isencode_decode);
 				ObtainPanel.extCreateButton.setEnabled(false);
 				break;
 			}

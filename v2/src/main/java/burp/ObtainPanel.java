@@ -68,10 +68,6 @@ public class ObtainPanel {
 		header.setFont(headerFont);
 		header.setBorder(new EmptyBorder(5, 0, 5, 0));
 
-        JLabel paneldescription = new JLabel("<html><b>Configuration: To make all the request valid, follow the below steps</b></html>");
-        paneldescription.setAlignmentX(Component.LEFT_ALIGNMENT);
-        paneldescription.setBorder(new EmptyBorder(0, 0, 10, 0));
-        
         JLabel paneldescriptionstep1 = new JLabel("1. Extraction: Select the value from response and add it extraction list");
         paneldescriptionstep1.setAlignmentX(Component.LEFT_ALIGNMENT);
         paneldescriptionstep1.setBorder(new EmptyBorder(0, 0, 2, 0));
@@ -86,8 +82,6 @@ public class ObtainPanel {
 
         callbacks.customizeUiComponent(header);
         confPanel.add(header);
-        callbacks.customizeUiComponent(paneldescription);
-//        confPanel.add(paneldescription);
         callbacks.customizeUiComponent(paneldescriptionstep1);
         confPanel.add(paneldescriptionstep1);
         callbacks.customizeUiComponent(paneldescriptionstep2);
@@ -129,20 +123,7 @@ public class ObtainPanel {
 		borderLayouttable.add(tablePaneldown, BorderLayout.PAGE_START);
 		
 		obtainPanel.add(borderLayouttable);
-		
-		JPanel borderLayoutsepsecond  = new JPanel();
-		borderLayoutsepsecond.setLayout(new BorderLayout());
-		borderLayoutsepsecond.add(getSeperatorPanel(), BorderLayout.PAGE_START);
-		obtainPanel.add(borderLayoutsepsecond);
-		
 		obtainPanel.add(preparethirdPanel());
-		
-		JPanel borderLayoutsepthird  = new JPanel();
-		borderLayoutsepthird.setLayout(new BorderLayout());
-		borderLayoutsepthird.add(getSeperatorPanel(), BorderLayout.PAGE_START);
-		obtainPanel.add(borderLayoutsepthird);
-		
-		
 		obtainPanel.add(preparefourthPanel());
 		
 		JPanel borderLayoutsepfourth  = new JPanel();
@@ -219,14 +200,11 @@ public class ObtainPanel {
 	public Component prepareExtractionReplacementPanel() {
 		
 		JSplitPane obtainextRepViewPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-//		obtainextRepViewPane.setPreferredSize(new Dimension(1000, 300));
 		obtainextRepViewPane.setResizeWeight(.5d);
 		obtainextRepViewPane.setDividerLocation(.5d);
 		callbacks.customizeUiComponent(obtainextRepViewPane);
 		
 		// prepare the extraction and replacement panel
-		
-		
 		// left panel - start
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.X_AXIS));
@@ -389,8 +367,9 @@ public class ObtainPanel {
                 new ConfigChangedListener(ConfigActions.A_EXT_VALIDITY));
         
         urldecodeComboBox.setPreferredSize(new Dimension(100, 40));
-        urldecodeComboBox.addItem("No");
-        urldecodeComboBox.addItem("Yes");
+        urldecodeComboBox.addItem("NA");
+        urldecodeComboBox.addItem("Encode");
+        urldecodeComboBox.addItem("Decode");
         
 		extButtonsPane.add(new JLabel("Name:"));
         extButtonsPane.add(extractionNameStringField);
@@ -402,7 +381,7 @@ public class ObtainPanel {
         extractedStringField.setEditable(false);
         extButtonsPane.add(extractedStringField);
         
-        extButtonsPane.add(new JLabel("Apply URL decode:"));
+        extButtonsPane.add(new JLabel("URL encode/decode:"));
         extButtonsPane.add(urldecodeComboBox);
         
         extCreateButton = new JButton("Add");
@@ -485,7 +464,6 @@ public class ObtainPanel {
 	
 	
 	public JScrollPane generateExtractionTablePanel() {
-//		JPopupMenu extPopupMenu = new JPopupMenu();
 		extPopupMenu.add("Delete").addActionListener(new ActionListener() {
 			
 			@Override
@@ -496,7 +474,6 @@ public class ObtainPanel {
 				
 			}
 		});
-		
 		callbacks.customizeUiComponent(extPopupMenu);
 		
 		extractionTableModel = new ExtractionTableModel(extractionEntrylist);
@@ -519,7 +496,15 @@ public class ObtainPanel {
         return extractionTableScroll;
 	}
 	
-	
+	public void removeWhiteSpaceCharacter(String extractionName) {
+		for(int index=0 ; index<extractionEntrylist.size(); index++) {
+			ExtractionEntry extractionEntry = extractionEntrylist.get(index);
+			if(extractionEntry.getName().equals(extractionName)) {
+				extractionEntry.clearWhiteSpaces = true;
+				break;
+			}
+		}
+	}
 	public void deleteEntryFromExtractionList(String extractionName) {
 		
 		for(int index=0 ; index<extractionEntrylist.size(); index++) {

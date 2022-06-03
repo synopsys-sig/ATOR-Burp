@@ -2,8 +2,6 @@ package burp;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
-import javax.swing.JComboBox;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -38,7 +36,6 @@ public class ConfigChangedListener implements DocumentListener, ItemListener {
                 
                 String start = ObtainPanel.startStringField.getText();
                 String stop = ObtainPanel.stopStringField.getText();
-                
 
                 String extracted_data = Extraction.extractData(response, start, stop, "EXTRACTION_ERROR");
                 ObtainPanel.extractedStringField.setText(extracted_data);
@@ -54,10 +51,8 @@ public class ConfigChangedListener implements DocumentListener, ItemListener {
                 
                 String exterrstart = ReplacePanel.startStringField.getText();
                 String exterrstop = ReplacePanel.stopStringField.getText();
-                
-                String err_extracted_data = Extraction.extractData(exterrrequest, exterrstart, exterrstop, "EXTRACTION_ERROR");
+                String err_extracted_data = ReplacePanel.extractedStringField.getText();
                 ReplacePanel.extractedStringField.setText(err_extracted_data);
-                
                 ReplacePanel.extCreateButton.setEnabled(AddEntryToExtractionListSpotError.isValidExtraction());
                 break;
 
@@ -69,8 +64,6 @@ public class ConfigChangedListener implements DocumentListener, ItemListener {
             	String repstart = ObtainPanel.repstartStringField.getText();
             	String repstop = ObtainPanel.repstopStringField.getText();
             	String extractionCombo = (String) ObtainPanel.extractionListComboBox.getSelectedItem();
-            	
-            	
             	String rep_extracted_data = Extraction.extractData(request, repstart, repstop, "REPLACEMENT_ERROR");
             	ObtainPanel.repextractedStringField.setText(rep_extracted_data);
             	ObtainPanel.repCreateButton.setEnabled(AddEntryToReplacementList.isValidReplacementExtraction());

@@ -9,6 +9,4 @@ public class MultipleErrorCondition {
 	public MultipleErrorCondition(IBurpExtenderCallbacks callbacks) {
 		this.callbacks = callbacks;
 	}
-	
-	
 }

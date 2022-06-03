@@ -31,10 +31,7 @@ public class ExecuteDryRun  extends Thread{
 					// Replacement after extraction
 					request = request.replace(replacementPositionString, replacementString);
 				}
-				
-				
-				
-				
+
 				// make HTTP request
 				IHttpService httpService = obtainEntry.iHttpRequestResponse.getHttpService();
 				IHttpRequestResponse updatedHttpRequestResponse = makeHttpCall(httpService, request.getBytes(), obtainEntry);
@@ -85,6 +82,27 @@ public class ExecuteDryRun  extends Thread{
 		String startString = extractionEntry.startString;
 		String stopString = extractionEntry.stopString;
 		String extractedString = Extraction.extractData(response, startString, stopString, "EXTRACTION_ERROR");
+		String extractionname = extractionEntry.getName();
+		
+		if(extractionname.startsWith("jwt")) {
+			DecodeToken decodeToken = new DecodeToken(callbacks);
+			String[] extractedvalue = extractionname.split("_");
+			if(extractedvalue.length > 1) {
+				extractedString = decodeToken.getTokenValue(extractedString, extractedvalue[1]);
+			}
+			
+		}
+		try {
+			if(extractionEntry.isencode_decode.equals("Decode")) {
+				extractedString = java.net.URLDecoder.decode(extractedString, "UTF-8");
+			}
+			else if(extractionEntry.isencode_decode.equals("Encode")) {
+				extractedString = java.net.URLEncoder.encode(extractedString, "UTF-8");
+			}
+		}
+		catch (Exception e) {
+			BurpExtender.callbacks.printOutput("Exception while performing encoding/decoding");
+		}
 		extractionEntry.value = extractedString;
 	}
 	
@@ -100,7 +118,9 @@ public class ExecuteDryRun  extends Thread{
 	}
 	
 	public IHttpRequestResponse makeCall(IHttpService iHttpService, byte[] requestbytes) {
-		IHttpRequestResponse iHttpRequestResponse = callbacks.makeHttpRequest(iHttpService, requestbytes);
+		IExtensionHelpers helpers = callbacks.getHelpers();
+		byte[] updatedrequest = Utils.checkContentLength(requestbytes, helpers);
+		IHttpRequestResponse iHttpRequestResponse = callbacks.makeHttpRequest(iHttpService, updatedrequest);
 		return iHttpRequestResponse;
 	}
 	

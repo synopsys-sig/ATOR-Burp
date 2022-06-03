@@ -21,7 +21,7 @@ public class AddEntryToExtractionList {
 			extractionEntry.startString = startString;
 			extractionEntry.stopString = stopString;
 			extractionEntry.selectedText = extractedString;
-			extractionEntry.isUrldecode = (String) ObtainPanel.urldecodeComboBox.getSelectedItem();
+			extractionEntry.isencode_decode = (String) ObtainPanel.urldecodeComboBox.getSelectedItem();
 			
 			ObtainPanel.extractionEntrylist.add(extractionEntry);
 			ObtainPanel.extractionListComboBox.addItem(extractedName);
