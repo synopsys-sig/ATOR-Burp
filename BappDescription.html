@@ -1,0 +1,18 @@
+<p>The plugin is created to help automated scanning using Burp in the following scenarios:</p>
+
+<ol>
+	<li>Access/Refresh token</li>
+	<li>Token replacement in XML,JSON body</li>
+	<li>Token replacement in cookies<br>
+		The above can be achieved using complex macro, session rules or Custom Extender in some scenarios. The rules become tricky and do not work in scenarios where the replacement text is either JSON, XML.</li>
+</ol>
+
+<p>Key advantages:</p>
+
+<ol>
+	<li>We have also achieved in-memory token replacement to avoid duplicate login requests like in both custom extender, macros/session rules.</li>
+	<li>Easy UX to help obtain data (from response) and replace data (in requests) using regex. This helps achieve complex scenarios where response body is JSON, XML and the request text is also JSON, XML, form data etc.</li>
+	<li>Scan speed - the scan speed increases considerably because there are no extra login requests. There is something called the "Trigger Request" which is the error condition (also includes regex) when the login requests are triggered. The error condition can include (response code = 401 and body contains "Unauthorized request")</li>
+</ol>
+
+<p>For more detailed usage instructions, please refer to the GitHub.</p>
