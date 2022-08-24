@@ -268,16 +268,16 @@ public class ErrorPanel {
 	public String generateDescription(String selectedCategory, String value) {
 		String description = "";
 		if(selectedCategory.equals("Status Code")) {
-			description = "ATOR will get trigger if " + "<b>" + selectedCategory  + "</b>" + " as " + "<b>" + value + "</b>" + " in network flows";
+			description = "ATOR will get trigger if " + selectedCategory  + " as " + value + " in network flows";
 		}
 		else if(selectedCategory.equals("Body")) {
-			description = "ATOR will get trigger if " + "<b>" + selectedCategory + "</b>" + " contains " + "<b>"+ value + "</b>" + " in network flows";
+			description = "ATOR will get trigger if " + selectedCategory + " contains " + value + " in network flows";
 		}
 		else if(selectedCategory.equals("Header")) {
-			description = "ATOR will get trigger if " + "<b>" + selectedCategory + "</b>" +" contains " + "<b>" + value + "</b>" + " in network flows";
+			description = "ATOR will get trigger if "+ selectedCategory + " contains " + value + " in network flows";
 		}
 		
-		return "<html>"+description+"</html>";
+		return description;
 	}
 	
 	public JScrollPane generateTablePanel() {
