@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>StableRelease</groupId>
   <artifactId>ATOR</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>v2.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <build>
       <defaultGoal>package</defaultGoal>
@@ -115,6 +115,11 @@
       <version>LATEST</version>
     </dependency>
     <dependency>
+          <groupId>io.swagger.parser.v3</groupId>
+          <artifactId>swagger-parser-v3</artifactId>
+          <version>2.0.24</version>
+      </dependency>
+    <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>4.11</version>
@@ -123,6 +128,11 @@
           <groupId>com.googlecode.json-simple</groupId>
    		  <artifactId>json-simple</artifactId>
    		  <version>1.1.1</version>
+      </dependency>
+    <dependency>
+          <groupId>commons-codec</groupId>
+   		  <artifactId>commons-codec</artifactId>
+   		  <version>1.9</version>
       </dependency>
   </dependencies>
 </project>

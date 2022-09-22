@@ -1,37 +1,32 @@
 package burp;
 
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
-/**
- * Created by fruh on 9/8/16.
- */
-public class ExtractionTable extends JTable {
-    private BurpExtender extender;
-    private ConfigChangedListener textChangedListener;
-
-    public ExtractionTable(BurpExtender extender) {
-        this.extender = extender;
-        textChangedListener = new ConfigChangedListener(extender, ConfigActions.A_EXT_CONFIG_CHANGED);
-    }
-
-    @Override
-    public void changeSelection(int i, int i1, boolean b, boolean b1) {
-        super.changeSelection(i, i1, b, b1);
-
-        if (i >= 0) {
-            Extraction ext = ((ExtractionModel) getModel()).getExtraction(i);
-
-            extender.getExtMessagesTable().setSelectionById(ext.getMsgId());
-            extender.getExtractionNameStringField().setText(ext.getId());
-            extender.getStartStringField().setText(ext.getStartString());
-            extender.getStopStringField().setText(ext.getStopString());
-        }
-        textChangedListener.textChanged();
-    }
-
-    public void setSelectionById(String id) {
-        ExtractionModel model = (ExtractionModel) getModel();
-
-        changeSelection(model.getRowById(id), 0, false, false);
-    }
+public class ExtractionTable extends JTable{
+	IBurpExtenderCallbacks callbacks;
+	public ExtractionTable(TableModel model, IBurpExtenderCallbacks callbacks) {
+		super(model);
+		this.callbacks = callbacks;
+	}
+	
+	@Override
+    public void changeSelection(int row, int col, boolean toggle, boolean extend) {
+		super.changeSelection(row, col, toggle, extend);
+		String name = (String) ObtainPanel.extractionTableModel.getValueAt(row, 0);
+		
+		for(ExtractionEntry entry:ObtainPanel.extractionEntrylist) {
+			if(entry.getName().equals(name)) {
+				
+				ObtainPanel.extractionNameStringField.setText(entry.getName());
+				ObtainPanel.startStringField.setText(entry.startString);
+				ObtainPanel.stopStringField.setText(entry.stopString);
+				ObtainPanel.extractedStringField.setText(entry.selectedText);
+				ObtainPanel.urldecodeComboBox.setSelectedItem(entry.isencode_decode);
+				ObtainPanel.extCreateButton.setEnabled(false);
+				break;
+			}
+		}
+		
+	}
 }

@@ -1,86 +1,124 @@
 package burp;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.Arrays;
 
-/**
- * Created by fruh on 9/7/16.
- */
 public class Extraction {
-    private String startString;
-    private String stopString;
-    private String msgId;
-    private String id;
-    private Set<String> repRefSet;
-
-    public Extraction(String startString, String stopString) {
-        this.startString = startString;
-        this.stopString = stopString;
-        repRefSet = new HashSet<>();
-    }
-
-    public String extractData(String response) {
-        return Extraction.extractData(response, startString, stopString);
-    }
-
-    public static String extractData(String response, String startString, String stopString) {
-        String ret = "EXTRACTION_ERROR";
+	
+    public static String extractData(String response, String startString, String stopString, String ret) {
+    	response = removeemptyCharacter(response);
+    	startString = removeemptyCharacter(startString);
+    	stopString = removeemptyCharacter(stopString);
         int index_of_start = response.indexOf(startString);
-
         if (index_of_start >= 0) {
-            String tmp_part = response.substring(index_of_start + startString.length());
-
+        	String tmp_part = response.substring(index_of_start + startString.length());
             int index_of_stop = tmp_part.indexOf(stopString);
-
             if (index_of_stop >= 0) {
                 ret = tmp_part.substring(0, index_of_stop);
             }
         }
         return ret;
     }
-
-    public String getStartString() {
-        return startString;
-    }
-
-    public String getStopString() {
-        return stopString;
-    }
-
-    public Set<String> getRepRefSet() {
-        return repRefSet;
-    }
-
-    public String getMsgId() {
-        return msgId;
-    }
-
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-    	StringBuilder finalString = new StringBuilder();
-    	finalString.append("'");
-    	finalString.append(id);
-    	finalString.append("', '");
-    	finalString.append(startString);
-    	finalString.append("', '");
-    	finalString.append(stopString);
-    	finalString.append("', '");
-    	finalString.append(msgId);
-    	finalString.append("'");
+    
+    public static String extractDataInSpotError(String request, String startString, String stopString, String ret) {
+    	request = removeemptyCharacter(request);
+    	startString = removeemptyCharacter(startString);
+    	stopString = removeemptyCharacter(stopString);
     	
-        return finalString.toString();
+    	int index_of_start = request.indexOf(startString);
+        if (index_of_start >= 0) {
+            String tmp_part = request.substring(index_of_start + startString.length());
+            int index_of_stop = tmp_part.indexOf(stopString);
+            if (index_of_stop >= 0) {
+                ret = tmp_part.substring(0, index_of_stop);
+            }
+        }
+        return ret;
     }
+    
+    public static String extractingDataInSpotError(String request, String startString, String stopString, String headerName, String ret) {
+    	String[] requestSplitNewLine = request.split("\\n");
+        for(int i=0; i<requestSplitNewLine.length; i++){
+            boolean result = requestSplitNewLine[i].contains(headerName);
+            if(result) {
+            	int index_of_start = requestSplitNewLine[i].indexOf(startString);
+                if (index_of_start >= 0) {
+                    String tmp_part = requestSplitNewLine[i].substring(index_of_start + startString.length());
+                    if (stopString.matches("EOL")){
+                    	ret = tmp_part;
+                    }
+                    else {
+                    	int index_of_stop = tmp_part.indexOf(stopString);
+                        if (index_of_stop >= 0) {
+                            ret = tmp_part.substring(0, index_of_stop);
+                        }
+                    }
+                }
+                		
+                }
+            }
+        ret = removeemptyCharacter(ret);
+        return ret;
+    }
+    
+    public static String removeemptyCharacter(String text) {
+    	text = text.replaceAll("\r", "");
+    	text = text.replaceAll("\n", "");
+    	text = text.replaceAll(" ", "");
+    	
+    	return text;
+    }
+
+	public static String removeemptyCharacterNotSpaces(String text) {
+		text = text.replaceAll("\r", "");
+		text = text.replaceAll("\n", "");
+		text = text.strip();
+		
+		return text;
+	}
+    public static String findNextStringAfterStartString(String request, String startString, String extractedString) {
+    	int index_of_start = request.indexOf(startString);
+    	String nextCharAftrStart = "";
+    	String extractedStringStartChar = Character.toString(extractedString.charAt(0));
+    	if (index_of_start >= 0) {
+    		String nextChar = Character.toString(request.charAt(index_of_start + startString.length()));
+    		for(int i=1 ; i<=5; i++) {
+    			if(nextChar.equals(extractedStringStartChar)) {
+    				break;
+    			}
+    			else {
+    				nextChar = Character.toString(request.charAt(index_of_start + startString.length() + i));
+    				nextCharAftrStart += nextChar;
+    			}
+    		}
+    		
+    	}
+    	return nextCharAftrStart + extractedString;
+    }
+    
+    
+    public static String findNextStringBeforeStopString(String request, String stopString, String extractedString) {
+    	int index_of_stopString = request.indexOf(stopString);
+    	String CharAftrStop = "";
+    	try {
+    	String extractedStringLastChar = Character.toString(extractedString.charAt(extractedString.length() - 1));
+    	if (index_of_stopString >= 0) {
+    		String nextChar = Character.toString(request.charAt(index_of_stopString));
+    		for(int i=0 ; i<=5; i++) {
+    			if(nextChar.equals(extractedStringLastChar)) {
+    				break;
+    			}
+    			else {
+    				nextChar = Character.toString(request.charAt(index_of_stopString - i));
+    				CharAftrStop += nextChar;
+    			}
+    		}
+    		
+    	}
+    	}
+    	catch(Exception e) {
+    		BurpExtender.callbacks.printOutput("Exception in findNextStringBeforeStopString"+ e.getMessage());
+    	}
+    	return CharAftrStop + extractedString;
+    }
+    
 }
