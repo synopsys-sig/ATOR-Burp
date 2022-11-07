@@ -55,9 +55,26 @@ public class Utils {
 				break;
 			}
 		}
-		
 		byte[] updatedrequest = helpers.buildHttpMessage(headers, helpers.stringToBytes(body));
 		return updatedrequest;
 	}
-
+    
+    public static String findheader(String request, String header) {
+    	String text = null;
+    	try {
+    		String[] requestList = request.split("\\n");
+    		 for(int i = 0; i < requestList.length; i++)
+ 	        	{
+ 	        	boolean matchedText = requestList[i].contains(header); 
+	            if(matchedText) {
+	            	String[] matchedLine =requestList[i].split(header);
+	            	text = matchedLine[1].strip().toString();	
+ 	        	}
+ 	        }
+    	}
+    	catch(Exception e) {
+    		BurpExtender.callbacks.printOutput("Exception in findNextStringBeforeStopString"+ e.getMessage());
+    	}
+    	return text;
+    }
 }

@@ -2,20 +2,15 @@ package burp;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by mani on 03/20/2021.
- */
 
 public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  IHttpListener {
 	
 	
-    private static String EXTENSION_NAME = "ATOR v2.1.0";
-    private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.1.0";
+    private static String EXTENSION_NAME = "ATOR v2.2.0";
+    private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.2.0";
     public static SpotErrorMetaData spoterroMetaData = null;;
     public static IBurpExtenderCallbacks callbacks;
     IExtensionHelpers helpers;
@@ -87,11 +82,9 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 					lockATOR = false;
 					ExecuteATORMacro executeATORMacro = new ExecuteATORMacro(callbacks);
 					executeATORMacro.executeATORMacro();
-					
 					IHttpService iHttpService = messageInfo.getHttpService();
 					String newRequestafterATORMacro = ExecuteATORMacro.replaceOnRequest(messageInfo);
 					IExtensionHelpers helpers = callbacks.getHelpers();
-					
 					byte[] updatedRequest = Utils.checkContentLength(helpers.stringToBytes(newRequestafterATORMacro), helpers);
 					IHttpRequestResponse updatedHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(iHttpService, updatedRequest);
 					messageInfo.setResponse(updatedHttpRequestResponse.getResponse());

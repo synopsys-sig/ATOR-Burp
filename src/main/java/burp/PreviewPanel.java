@@ -11,12 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.imageio.ImageIO;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -247,7 +242,6 @@ public class PreviewPanel {
 	public void executeDryRun() {
 		SwingWorker swing = new SwingWorker() 
         {
-
 			@Override
 			protected Object doInBackground() throws Exception {
 				executePreviewPanel();
@@ -332,18 +326,21 @@ public class PreviewPanel {
 		for(ReplaceEntry rep: ReplacePanel.replaceEntrylist) {
 			String extractionName = rep.getextractionName();
 			// TODO
+			// Aditi
 			String extracted =  BurpExtender.callbacks.getHelpers().bytesToString(ReplacePanel.ireqMessageEditor.getSelectedData());
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
+					if (value != null) {
+					value = Extraction.removeemptyCharacter(value);
 					if(!extracted.equals("Ext ERR on SPOT")) {
 						requestmsg = requestmsg.replace(extracted, value);
-					}
+					}}
 					break;
 				}
 			}
 		}
-
+		
 		IExtensionHelpers helpers = BurpExtender.callbacks.getHelpers();
 		byte[] updatedRequest = Utils.checkContentLength(requestmsg.getBytes(), helpers);
 		IHttpRequestResponse iHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(BurpExtender.spoterroMetaData.iHttpService, 

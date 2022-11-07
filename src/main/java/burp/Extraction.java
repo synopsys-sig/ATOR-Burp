@@ -1,6 +1,7 @@
 package burp;
 
-import java.util.Arrays;
+import java.net.URLEncoder;
+import java.util.Map;
 
 public class Extraction {
 	
@@ -9,11 +10,22 @@ public class Extraction {
     	startString = removeemptyCharacter(startString);
     	stopString = removeemptyCharacter(stopString);
         int index_of_start = response.indexOf(startString);
+        // adi
+        int index_of_stop = 0;
         if (index_of_start >= 0) {
-        	String tmp_part = response.substring(index_of_start + startString.length());
-            int index_of_stop = tmp_part.indexOf(stopString);
-            if (index_of_stop >= 0) {
+            String tmp_part = response.substring(index_of_start + startString.length());
+            if (stopString.equals("EOL"))
+            {
+            	index_of_stop = 0;
+            }
+            else {
+            	index_of_stop = tmp_part.indexOf(stopString);
+            }
+            if (index_of_stop > 0) {
                 ret = tmp_part.substring(0, index_of_stop);
+            }
+            else {
+            	ret = tmp_part;
             }
         }
         return ret;
@@ -23,6 +35,7 @@ public class Extraction {
     	request = removeemptyCharacter(request);
     	startString = removeemptyCharacter(startString);
     	stopString = removeemptyCharacter(stopString);
+    	
     	
     	int index_of_start = request.indexOf(startString);
         if (index_of_start >= 0) {
@@ -35,11 +48,15 @@ public class Extraction {
         return ret;
     }
     
-    public static String extractingDataInSpotError(String request, String startString, String stopString, String headerName, String ret) {
+    public static String extractingDataInSpotError(String request, String startString, String stopString, String headerName, String ret, String bodyText) {
     	String[] requestSplitNewLine = request.split("\\n");
+    	boolean selectionTag = false;
         for(int i=0; i<requestSplitNewLine.length; i++){
-            boolean result = requestSplitNewLine[i].contains(headerName);
+        	String key = requestSplitNewLine[i].split(":")[0];
+        	String header = headerName.split(":")[0];
+            boolean result = requestSplitNewLine[i].contains(headerName) && key.equals(header) ;
             if(result) {
+            	selectionTag = true; 
             	int index_of_start = requestSplitNewLine[i].indexOf(startString);
                 if (index_of_start >= 0) {
                     String tmp_part = requestSplitNewLine[i].substring(index_of_start + startString.length());
@@ -55,7 +72,44 @@ public class Extraction {
                 }
                 		
                 }
-            }
+        }
+        if (!selectionTag)
+        {
+        	try {
+        		Map<String, String> query_pairs = ExtStringCreator.splitQuery(bodyText);
+	        	for (Map.Entry<String, String> query : query_pairs.entrySet()) {
+	        		if (query.getKey().equals(headerName)) {
+	        			int index_of_start = query.toString().indexOf(startString);
+	        	        int index_of_stop = 0;
+	        	        if (index_of_start >= 0) {
+	        	            String tmp_part = query.toString().substring(index_of_start + startString.length());
+	        	            if (stopString.equals("EOL"))
+	        	            {
+	        	            	index_of_stop = 0;
+	        	            }
+	        	            else {
+	        	            	index_of_stop = tmp_part.indexOf(stopString);
+	        	            }
+	        	            if (index_of_stop > 0) {
+	        	                ret = tmp_part.substring(0, index_of_stop);
+	        	                ret = URLEncoder.encode(ret, "UTF-8").strip();
+	        	            }
+	        	            else {
+	        	            	ret = tmp_part;
+	        	            	ret = URLEncoder.encode(ret, "UTF-8").strip();
+	        	            }
+	        	        }
+	        	        break;
+	        		}
+	        		else if (query.getValue().equals(headerName)) {
+	        			// to do
+	        		}	
+	           }
+        	}
+        	catch(Exception e) {
+        		BurpExtender.callbacks.printOutput("Exception in body param finding "+ e.getMessage());
+        	}
+        }
         ret = removeemptyCharacter(ret);
         return ret;
     }
@@ -67,14 +121,14 @@ public class Extraction {
     	
     	return text;
     }
-
-	public static String removeemptyCharacterNotSpaces(String text) {
-		text = text.replaceAll("\r", "");
-		text = text.replaceAll("\n", "");
-		text = text.strip();
-		
-		return text;
-	}
+    	
+    public static String removeemptyCharacterNotSpaces(String text) {
+    	text = text.replaceAll("\r", "");
+    	text = text.replaceAll("\n", "");
+    	text = text.strip();
+    	
+    	return text;
+    }
     public static String findNextStringAfterStartString(String request, String startString, String extractedString) {
     	int index_of_start = request.indexOf(startString);
     	String nextCharAftrStart = "";
