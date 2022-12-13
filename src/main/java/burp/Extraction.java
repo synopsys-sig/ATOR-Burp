@@ -28,6 +28,7 @@ public class Extraction {
             	ret = tmp_part;
             }
         }
+
         return ret;
     }
     
@@ -51,6 +52,7 @@ public class Extraction {
     public static String extractingDataInSpotError(String request, String startString, String stopString, String headerName, String ret, String bodyText) {
     	String[] requestSplitNewLine = request.split("\\n");
     	boolean selectionTag = false;
+    	try {
         for(int i=0; i<requestSplitNewLine.length; i++){
         	String key = requestSplitNewLine[i].split(":")[0];
         	String header = headerName.split(":")[0];
@@ -73,7 +75,12 @@ public class Extraction {
                 		
                 }
         }
-        if (!selectionTag)
+    	}
+    	catch(Exception e) {
+    		BurpExtender.callbacks.printOutput("Exception in finding from body "+ e.getMessage());
+    	}
+    	// search in body part
+        if ((!selectionTag) && (! bodyText.isEmpty()))
         {
         	try {
         		Map<String, String> query_pairs = ExtStringCreator.splitQuery(bodyText);
