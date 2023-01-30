@@ -52,6 +52,7 @@ public class ExecuteATORMacro {
 		String extractedString = Extraction.extractData(response, startString, stopString, "EXTRACTION_ERROR");
 		String extractionname = extractionEntry.getName();
 		if(extractionname.startsWith("jwt")) {
+			callbacks.printOutput("yes its jwt" );
 			DecodeToken decodeToken = new DecodeToken(callbacks);
 			String[] extractedvalue = extractionname.split("_");
 			if(extractedvalue.length > 1) {
@@ -87,8 +88,8 @@ public class ExecuteATORMacro {
 		Boolean useHttps = false;
 		IExtensionHelpers helpers = callbacks.getHelpers();
 		byte[] updatedRequest = Utils.checkContentLength(requestbytes, helpers);
-		//IHttpRequestResponse iHttpRequestResponse = callbacks.makeHttpRequest(iHttpService, updatedRequest);
-		
+		IHttpRequestResponse iHttpRequestResponse = callbacks.makeHttpRequest(iHttpService, updatedRequest);
+
 		String host = Utils.findheader(BurpExtender.callbacks.getHelpers().bytesToString(updatedRequest), "Host: ");
 		int port = iHttpService.getPort();
 		String protocol = iHttpService.getProtocol();
@@ -97,6 +98,11 @@ public class ExecuteATORMacro {
 		}
 		byte[] byteResponse = callbacks.makeHttpRequest(host, port, useHttps, updatedRequest);
 		String response = BurpExtender.callbacks.getHelpers().bytesToString(byteResponse);
+		
+		int offset = BurpExtender.callbacks.getHelpers().analyzeRequest(iHttpRequestResponse).getBodyOffset();
+		// testing to fetch start of body, pending
+		String headers = response.substring(0, offset);
+    	String bodyText = response.substring(offset);
 		return response;
 	}
 	
@@ -112,8 +118,11 @@ public class ExecuteATORMacro {
 			String extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
 			// TODO
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
+				//BurpExtender.callbacks.printOutput("extractionName "+ extractionName);
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
+					BurpExtender.callbacks.printOutput("extraction value "+ value);
+
 					if (value != null) {
 					value = Extraction.removeemptyCharacter(value);
 					if(!extracted.equals("Ext ERR on SPOT")) {
