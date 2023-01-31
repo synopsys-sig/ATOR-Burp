@@ -52,7 +52,6 @@ public class ExecuteATORMacro {
 		String extractedString = Extraction.extractData(response, startString, stopString, "EXTRACTION_ERROR");
 		String extractionname = extractionEntry.getName();
 		if(extractionname.startsWith("jwt")) {
-			callbacks.printOutput("yes its jwt" );
 			DecodeToken decodeToken = new DecodeToken(callbacks);
 			String[] extractedvalue = extractionname.split("_");
 			if(extractedvalue.length > 1) {
@@ -121,12 +120,10 @@ public class ExecuteATORMacro {
 				//BurpExtender.callbacks.printOutput("extractionName "+ extractionName);
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
-					BurpExtender.callbacks.printOutput("extraction value "+ value);
-
 					if (value != null) {
 					value = Extraction.removeemptyCharacter(value);
-					if(!extracted.equals("Ext ERR on SPOT")) {
-						requestmsg = requestmsg.replace(extracted, value);
+					if((!extracted.equals("Ext ERR on SPOT")) || (!extracted.equals("ExtERRonSPOT"))) {
+						requestmsg = requestmsg.replace(extracted, value);		
 					}}
 					break;
 				}

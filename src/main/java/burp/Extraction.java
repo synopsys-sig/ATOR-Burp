@@ -60,7 +60,8 @@ public class Extraction {
             if(result) {
             	selectionTag = true; 
             	int index_of_start = requestSplitNewLine[i].indexOf(startString);
-                if (index_of_start >= 0) {
+                
+            	if (index_of_start >= 0) {
                     String tmp_part = requestSplitNewLine[i].substring(index_of_start + startString.length());
                     if (stopString.matches("EOL")){
                     	ret = tmp_part;
@@ -89,8 +90,8 @@ public class Extraction {
 	        			int index_of_start = query.toString().indexOf(startString);
 	        	        int index_of_stop = 0;
 	        	        if (index_of_start >= 0) {
-	        	            String tmp_part = query.toString().substring(index_of_start + startString.length());
-	        	            if (stopString.equals("EOL"))
+	        	        	String tmp_part = query.toString().substring(index_of_start + startString.length());
+	        	   	        if (stopString.equals("EOL"))
 	        	            {
 	        	            	index_of_stop = 0;
 	        	            }
@@ -117,6 +118,7 @@ public class Extraction {
         		BurpExtender.callbacks.printOutput("Exception in body param finding "+ e.getMessage());
         	}
         }
+
         ret = removeemptyCharacter(ret);
         return ret;
     }
