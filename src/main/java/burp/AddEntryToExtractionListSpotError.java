@@ -67,8 +67,6 @@ public class AddEntryToExtractionListSpotError {
 	
 	public static String findPattern(String request, String startString, String stopString, String extractedString) {
 		String value = Extraction.extractDataInSpotError(request, startString, stopString, "Ext ERR on SPOT");
-		BurpExtender.callbacks.printOutput("Spot error condition value"+ value);
-		
 		if(!value.equals("Ext ERR on SPOT")) {
 			return value;
 		}

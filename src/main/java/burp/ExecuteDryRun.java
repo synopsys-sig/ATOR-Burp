@@ -54,9 +54,7 @@ public class ExecuteDryRun  extends Thread{
 			catch(InterruptedException e) {
 				callbacks.printOutput("Exception in making the ATOR MAcro.."+ e.getMessage());
 			}
-	
 		}
-		
 		
 		}
 		catch(Exception e) {
@@ -90,7 +88,6 @@ public class ExecuteDryRun  extends Thread{
 			if(extractedvalue.length > 1) {
 				extractedString = decodeToken.getTokenValue(extractedString, extractedvalue[1]);
 			}
-			
 		}
 		try {
 			if(extractionEntry.isencode_decode.equals("Decode")) {
