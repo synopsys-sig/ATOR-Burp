@@ -117,7 +117,6 @@ public class ExecuteATORMacro {
 			String extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
 			// TODO
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
-				//BurpExtender.callbacks.printOutput("extractionName "+ extractionName);
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
 					if (value != null) {
