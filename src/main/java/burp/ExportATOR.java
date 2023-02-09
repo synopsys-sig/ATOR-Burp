@@ -3,9 +3,8 @@ package burp;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-
 import javax.swing.JFileChooser;
-
+import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -27,7 +26,8 @@ public class ExportATOR {
       
         if(directory != null) {
         	try {
-        		String exportATORConfig = directory+ File.separator+ "export.json";
+        		String currentTime = DateTime.now().toString("MMddyyyyHHmmss");
+        		String exportATORConfig = directory+ File.separator+ "export"+"_"+currentTime+".json";
 				FileWriter file = new FileWriter(exportATORConfig);
 				
 				PrintWriter out = new PrintWriter(file);
@@ -87,8 +87,6 @@ public class ExportATOR {
 	}
 	
 	
-	
-	
 	public JSONArray getErrorList() {
 		JSONArray jsonArray = new JSONArray();
 		for(ErrorEntry errorEntry:ErrorPanel.errorEntrylist) {
@@ -103,7 +101,6 @@ public class ExportATOR {
 		}
 		return jsonArray;
 	}
-	
 	
 	
 	public JSONArray getATORMacro() {
@@ -122,8 +119,7 @@ public class ExportATOR {
 			jsonObject.put("httpServicehost", obtainEntry.iHttpRequestResponse.getHttpService().getHost());
 			jsonObject.put("httpServiceport", obtainEntry.iHttpRequestResponse.getHttpService().getPort());
 			jsonObject.put("httpServiceprotocol", obtainEntry.iHttpRequestResponse.getHttpService().getProtocol());
-			
-			
+		
 			String request = this.callbacks.getHelpers().bytesToString(obtainEntry.req);
 			String response = this.callbacks.getHelpers().bytesToString(obtainEntry.res);
 			
@@ -171,7 +167,6 @@ public class ExportATOR {
 	}
 	
 	
-	
 	public JSONObject getMarkTriggerCondition() {
 		JSONObject triggerjsonObject = new JSONObject();
 		
@@ -183,7 +178,6 @@ public class ExportATOR {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("logical", (String)multipleErrorCondition.logicalCondition.getSelectedItem());
 			jsonObject.put("triggerConditionName", (String)multipleErrorCondition.triggerComboBox.getSelectedItem());
-			
 			jsonArray.add(jsonObject);
 		}
 		

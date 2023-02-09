@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -308,12 +307,9 @@ public class ErrorPanel {
 		});
 		
 		callbacks.customizeUiComponent(extPopupMenu);
-		
 		errorTableModel = new ErrorTableModel(errorEntrylist);
         errorTable = new ErrorTable(errorTableModel, callbacks);
-        
         errorTable.setComponentPopupMenu(extPopupMenu);
-
         errorTable.setModel(errorTableModel);
         this.callbacks.customizeUiComponent(errorTable);
         

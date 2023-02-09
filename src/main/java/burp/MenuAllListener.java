@@ -1,8 +1,7 @@
 package burp;
-import java.util.Arrays;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JOptionPane;
 
 public class MenuAllListener implements ActionListener{
@@ -62,8 +61,8 @@ public class MenuAllListener implements ActionListener{
 				ReplacePanel.iresMessageEditor.setMessage(iHttpRequestResponse.getResponse(), false);
 				
 				PreviewPanel.ireqMessageEditor.setMessage(iHttpRequestResponse.getRequest(), true);
-				
 				getDefaultTriggerCondition(iHttpRequestResponse);
+				
 			}
 			}
 			catch(Exception e) {
@@ -126,8 +125,8 @@ public class MenuAllListener implements ActionListener{
                 repselected = new String(this.obtainPanel.ireqMessageEditor.getSelectedData());
                 repstartStop = ExtStringCreator.getStartStopString(repselected,
                         new String(this.obtainPanel.ireqMessageEditor.getMessage()), bounds);
-
-
+               
+                
             }
             if (repstartStop != null) {
             	this.obtainPanel.replacementNameStringField.setText("");
@@ -163,18 +162,26 @@ public class MenuAllListener implements ActionListener{
 			String repextstartStop[] = null;
             String repextselected = null;
             String repextheader [] = null;
+            String new_msg = null;
         	int[] bounds = new int[2];
         	bounds[0] = bounds[1] = 0;
-
+            
             if (this.replacePanel.ireqMessageEditor.getSelectedData() != null) {
                 
                 repextselected = new String(this.replacePanel.ireqMessageEditor.getSelectedData());
-            	
-                repextheader = ExtStringCreator.extractheader(repextselected,
-                        new String(this.replacePanel.ireqMessageEditor.getMessage()));
+                IRequestInfo messageInfo = BurpExtender.callbacks.getHelpers().analyzeRequest(this.replacePanel.ireqMessageEditor.getMessage());
+                String requestmsg = new String(this.replacePanel.ireqMessageEditor.getMessage());
+                
+                
+                int offset = messageInfo.getBodyOffset();
+    			String headers = requestmsg.substring(0, offset);
+            	String bodyText = requestmsg.substring(offset);
 
+                repextheader = ExtStringCreator.extractheader(repextselected, headers, bodyText);
+                
                 bounds[0] = repextheader[0].indexOf(repextselected);
                 bounds[1] = bounds[0] + repextselected.length();
+
                 repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
                 		repextheader[0], bounds);
                 
