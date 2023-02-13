@@ -263,7 +263,6 @@ public class ReplacePanel {
 						multipleErrorConditions.remove(multipleErrorCondition);
 						PreviewPanel.conditionDetails.setText(FinalErrorCondition.addErrorCondition());
 						secondscrollPanel.repaint();
-						
 					}
 				});
 				
