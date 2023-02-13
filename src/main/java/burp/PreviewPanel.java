@@ -307,49 +307,29 @@ public class PreviewPanel {
 					}
 				};
 				afterReplacement.start();
-			
 			}
-			
-
-
 		}
 		}
 		catch(Exception e) {
 			callbacks.printOutput("Exception in making HTTP call-->"+ e.getMessage());
 		}
-		
 	}
-	
 	
 	public static String executeErrorConditionAfterExtraction() {
-		String requestmsg = BurpExtender.callbacks.getHelpers().bytesToString(BurpExtender.spoterroMetaData.request);
-		for(ReplaceEntry rep: ReplacePanel.replaceEntrylist) {
-			String extractionName = rep.getextractionName();
-			// TODO
-			// Aditi
-			String extracted =  BurpExtender.callbacks.getHelpers().bytesToString(ReplacePanel.ireqMessageEditor.getSelectedData());
-			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
-				if(extractionEntry.getName().equals(extractionName)) {
-					String value = extractionEntry.value;
-					if (value != null) {
-					value = Extraction.removeemptyCharacter(value);
-					if(!extracted.equals("Ext ERR on SPOT")) {
-						requestmsg = requestmsg.replace(extracted, value);
-					}}
-					break;
-				}
-			}
-		}
-		
+		// error condition replacement
+		IHttpRequestResponse iHttpRequestResponse = BurpExtender.spoterroMetaData.iHttpRequestResponse;
+		String requestmsg = ExecuteATORMacro.replaceOnRequest(iHttpRequestResponse);
+
 		IExtensionHelpers helpers = BurpExtender.callbacks.getHelpers();
 		byte[] updatedRequest = Utils.checkContentLength(requestmsg.getBytes(), helpers);
-		IHttpRequestResponse iHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(BurpExtender.spoterroMetaData.iHttpService, 
+
+		IHttpRequestResponse updatedIHttpRequestResponse = BurpExtender.callbacks.makeHttpRequest(BurpExtender.spoterroMetaData.iHttpService, 
 				updatedRequest);
-		PreviewPanel.ireqmodifiedMessageEditor.setMessage(iHttpRequestResponse.getRequest(), true);
-		PreviewPanel.iresmodifiedMessageEditor.setMessage(iHttpRequestResponse.getResponse(), false);
-		
+		PreviewPanel.ireqmodifiedMessageEditor.setMessage(updatedIHttpRequestResponse.getRequest(), true);
+		PreviewPanel.iresmodifiedMessageEditor.setMessage(updatedIHttpRequestResponse.getResponse(), false);
 		return requestmsg;
 	}
+	
 	
 	public Component prepareRequestResponsePanel() {
 		ErrorRequestResponse previewRequestResponse = new ErrorRequestResponse();

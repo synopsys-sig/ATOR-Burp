@@ -69,11 +69,9 @@ public class Extraction {
                     else {
                     	int index_of_stop = tmp_part.indexOf(stopString);
                         if (index_of_stop >= 0) {
-                            ret = tmp_part.substring(0, index_of_stop);
-                        }
-                    }
-                }
-                		
+                            ret = tmp_part.substring(0, index_of_stop); }
+                    	}
+                	}	
                 }
         }
     	}
@@ -138,6 +136,11 @@ public class Extraction {
     	
     	return text;
     }
+    
+    public static String removeNewLine(String text) {
+    	return text.replaceAll("\n", "");
+    }
+    
     public static String findNextStringAfterStartString(String request, String startString, String extractedString) {
     	int index_of_start = request.indexOf(startString);
     	String nextCharAftrStart = "";

@@ -44,13 +44,13 @@ public class MenuAllListener implements ActionListener{
 		switch(action) {	
 		case ATOR_ERROR:
 			try {
-			if(messages.length > 1) {
-				JOptionPane.showMessageDialog(null, 
-                        "Error condition should be a single request and response", 
-                        "Multiple requests/responses selected", 
-                        JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+				if(messages.length > 1) {
+					JOptionPane.showMessageDialog(null, 
+	                        "Error condition should be a single request and response", 
+	                        "Multiple requests/responses selected", 
+	                        JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 			else {
 				IHttpRequestResponse iHttpRequestResponse = messages[0];
 				setSpotErrorCondition(iHttpRequestResponse);
@@ -158,6 +158,7 @@ public class MenuAllListener implements ActionListener{
 			AddEntryToExtractionListSpotError.clearAll();
 			break;
 		case FROM_SELECTION_EXTRACTION_FOR_REP:
+			try {
 			// Extract start,stop string
 			String repextstartStop[] = null;
             String repextselected = null;
@@ -167,24 +168,20 @@ public class MenuAllListener implements ActionListener{
         	bounds[0] = bounds[1] = 0;
             
             if (this.replacePanel.ireqMessageEditor.getSelectedData() != null) {
-                
                 repextselected = new String(this.replacePanel.ireqMessageEditor.getSelectedData());
                 IRequestInfo messageInfo = BurpExtender.callbacks.getHelpers().analyzeRequest(this.replacePanel.ireqMessageEditor.getMessage());
                 String requestmsg = new String(this.replacePanel.ireqMessageEditor.getMessage());
-                
                 
                 int offset = messageInfo.getBodyOffset();
     			String headers = requestmsg.substring(0, offset);
             	String bodyText = requestmsg.substring(offset);
 
                 repextheader = ExtStringCreator.extractheader(repextselected, headers, bodyText);
-                
                 bounds[0] = repextheader[0].indexOf(repextselected);
                 bounds[1] = bounds[0] + repextselected.length();
 
                 repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
-                		repextheader[0], bounds);
-                
+                		repextheader[0], bounds);                
             }
             if (repextstartStop != null) {
             	this.replacePanel.extractionNameStringField.setText("");
@@ -211,6 +208,10 @@ public class MenuAllListener implements ActionListener{
                         "Extraction Operation Failed ", 
                         JOptionPane.WARNING_MESSAGE);
             }
+			}
+			catch (Exception e) {
+				BurpExtender.callbacks.printOutput("Exception in FROM SELECTION " + e.getMessage());
+			}
 			break;
 			
 		case A_ENABLE_DISABLE:
@@ -231,30 +232,25 @@ public class MenuAllListener implements ActionListener{
 	
 	public void  getDefaultTriggerCondition(IHttpRequestResponse iHttpRequestResponse) {
 		try {
-		IExtensionHelpers iExtensionHelpers = callbacks.getHelpers();
-		byte[] responseByte = iHttpRequestResponse.getResponse();
-		
-		IResponseInfo iResponseInfo = iExtensionHelpers.analyzeResponse(responseByte);
-		
-		String statusCode = String.valueOf(iResponseInfo.getStatusCode());
-		
-		ErrorPanel.triggerComboBox.setSelectedItem("Status Code");
-		ErrorPanel.triggerValue.setText(statusCode);
-		
-		ErrorPanel.comment = iHttpRequestResponse.getComment();
-		ErrorPanel.highlight = iHttpRequestResponse.getHighlight();
-		
-		ErrorPanel.host = iHttpRequestResponse.getHttpService().getHost();
-		ErrorPanel.port = iHttpRequestResponse.getHttpService().getPort();
-		ErrorPanel.protocol = iHttpRequestResponse.getHttpService().getProtocol();
-		
-	
+			IExtensionHelpers iExtensionHelpers = callbacks.getHelpers();
+			byte[] responseByte = iHttpRequestResponse.getResponse();
+			
+			IResponseInfo iResponseInfo = iExtensionHelpers.analyzeResponse(responseByte);
+			String statusCode = String.valueOf(iResponseInfo.getStatusCode());
+
+			ErrorPanel.triggerComboBox.setSelectedItem("Status Code");
+			ErrorPanel.triggerValue.setText(statusCode);
+			
+			ErrorPanel.comment = iHttpRequestResponse.getComment();
+			ErrorPanel.highlight = iHttpRequestResponse.getHighlight();
+			
+			ErrorPanel.host = iHttpRequestResponse.getHttpService().getHost();
+			ErrorPanel.port = iHttpRequestResponse.getHttpService().getPort();
+			ErrorPanel.protocol = iHttpRequestResponse.getHttpService().getProtocol();
 		}
 		catch(Exception e) {
 			callbacks.printOutput("Exception while calculating status code for error condition "+ e.getMessage());
 		}
-		
-		
 	}
 	
 	

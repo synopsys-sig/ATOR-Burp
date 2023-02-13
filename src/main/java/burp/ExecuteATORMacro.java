@@ -21,7 +21,6 @@ public class ExecuteATORMacro {
 					// Replacement after extraction
 					request = request.replace(replacementPositionString, replacementString);
 				}
-				
 				// make HTTP request
 				IHttpService httpService = obtainEntry.iHttpRequestResponse.getHttpService();
 				makeHttpCall(httpService, request.getBytes(), obtainEntry);
@@ -58,7 +57,6 @@ public class ExecuteATORMacro {
 				extractedString = decodeToken.getTokenValue(extractedString, extractedvalue[1]);
 			}
 		}
-		
 		try {
 			if(extractionEntry.isencode_decode.equals("Decode")) {
 				extractedString = java.net.URLDecoder.decode(extractedString, "UTF-8");
@@ -76,33 +74,42 @@ public class ExecuteATORMacro {
 	public void makeHttpCall(IHttpService httpService, byte[] request, ObtainEntry obtainEntry) {
 //		IHttpRequestResponse updatedHttpRequestResponse = makeCall(httpService, request);
 //		String response = callbacks.getHelpers().bytesToString(updatedHttpRequestResponse.getResponse());
-		String response = makeCall(httpService, request);
-		for(ExtractionEntry extractionEntry: obtainEntry.extractionlistNames) {
-			// Do extraction if any
-			setExtractionEntry(response, extractionEntry);
+		try {
+			String response = makeCall(httpService, request);
+			for(ExtractionEntry extractionEntry: obtainEntry.extractionlistNames) {
+				// Do extraction if any
+				setExtractionEntry(response, extractionEntry);
+			}
+		}
+		catch (Exception e) {
+			BurpExtender.callbacks.printOutput("Exception in makeHttpCall " + e.getMessage());
 		}
 	}
 	
 	public String makeCall(IHttpService iHttpService, byte[] requestbytes) {
 		Boolean useHttps = false;
+		String response = null;
 		IExtensionHelpers helpers = callbacks.getHelpers();
 		byte[] updatedRequest = Utils.checkContentLength(requestbytes, helpers);
-		IHttpRequestResponse iHttpRequestResponse = callbacks.makeHttpRequest(iHttpService, updatedRequest);
-
 		String host = Utils.findheader(BurpExtender.callbacks.getHelpers().bytesToString(updatedRequest), "Host: ");
 		int port = iHttpService.getPort();
 		String protocol = iHttpService.getProtocol();
 		if (protocol.equals("https")){
 			useHttps = true;
 		}
-		byte[] byteResponse = callbacks.makeHttpRequest(host, port, useHttps, updatedRequest);
-		String response = BurpExtender.callbacks.getHelpers().bytesToString(byteResponse);
-		
-		int offset = BurpExtender.callbacks.getHelpers().analyzeRequest(iHttpRequestResponse).getBodyOffset();
-		// testing to fetch start of body, pending
-		String headers = response.substring(0, offset);
-    	String bodyText = response.substring(offset);
-		return response;
+		try {
+			byte[] byteResponse = callbacks.makeHttpRequest(host, port, useHttps, updatedRequest);
+			response = BurpExtender.callbacks.getHelpers().bytesToString(byteResponse);
+			//int offset = BurpExtender.callbacks.getHelpers().analyzeResponse(byteResponse).getBodyOffset();
+//			// testing to fetch start of body, pending
+//			String headers = response.substring(0, offset);
+//	    	String bodyText = response.substring(offset);
+	    	return response;
+		}
+		catch (Exception e) {
+			BurpExtender.callbacks.printOutput("Exception in makeCall " + e.getMessage());
+			return response;
+		}
 	}
 	
 	
@@ -117,12 +124,13 @@ public class ExecuteATORMacro {
 			String extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
 			// TODO
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
+				//BurpExtender.callbacks.printOutput("extractionName "+ extractionName);
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
 					if (value != null) {
-					value = Extraction.removeemptyCharacter(value);
-					if((!extracted.equals("Ext ERR on SPOT")) || (!extracted.equals("ExtERRonSPOT"))) {
-						requestmsg = requestmsg.replace(extracted, value);		
+						value = Extraction.removeemptyCharacter(value);
+						if((!extracted.equals("Ext ERR on SPOT")) || (!extracted.equals("ExtERRonSPOT"))) {
+							requestmsg = requestmsg.replace(extracted, value);		
 					}}
 					break;
 				}

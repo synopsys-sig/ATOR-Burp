@@ -64,11 +64,16 @@ public class ImportATOR {
 		byte[] requestbyte = callbacks.getHelpers().stringToBytes(request);
 		byte[] responsebyte = callbacks.getHelpers().stringToBytes(response);
 		
-		String host = (String) jsonObject.get("host");
-		Long port = (Long) jsonObject.get("port");
-		String protocol = (String) jsonObject.get("protocol");
+//		String host = (String) jsonObject.get("host");
+//		Long port = (Long) jsonObject.get("port");
+//		String protocol = (String) jsonObject.get("protocol");
 		
-		IHttpServiceImpl iHttpService = new IHttpServiceImpl(host, port.intValue(), protocol);
+		ErrorPanel.host = (String) jsonObject.get("host");
+		Long port = (Long) jsonObject.get("port");
+		ErrorPanel.port = port.intValue();
+		ErrorPanel.protocol = (String) jsonObject.get("protocol");
+		
+		IHttpServiceImpl iHttpService = new IHttpServiceImpl(ErrorPanel.host, ErrorPanel.port, ErrorPanel.protocol);
 		
 		String comment = (String) jsonObject.get("comment");
 		String highlight = (String) jsonObject.get("highlight");

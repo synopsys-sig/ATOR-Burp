@@ -55,17 +55,15 @@ public class ExportATOR {
 	public JSONObject getErrorCondition() {
 		String requestMessage = this.callbacks.getHelpers().bytesToString(ErrorPanel.ireqMessageEditor.getMessage());
 		String responseMessage = this.callbacks.getHelpers().bytesToString(ErrorPanel.iresMessageEditor.getMessage());	
-		
+
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("request", requestMessage);
 		jsonObject.put("response", responseMessage);
-		
 		jsonObject.put("comment", ErrorPanel.comment);
 		jsonObject.put("highlight", ErrorPanel.highlight);
 		jsonObject.put("host", ErrorPanel.host);
 		jsonObject.put("port", ErrorPanel.port);
 		jsonObject.put("protocol", ErrorPanel.protocol);
-		
 		jsonObject.put("errorconditionlist", getErrorList());
 		
 		return jsonObject;
