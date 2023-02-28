@@ -193,7 +193,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 			mainmenu.add(errorMenu);
 			mainmenu.add(atorMacroMenu);
 			
-			
 			menu.add(mainmenu);
             return menu;
 		}

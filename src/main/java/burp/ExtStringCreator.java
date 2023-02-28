@@ -107,8 +107,8 @@ public class ExtStringCreator {
         }
         return index;
     }
+    
     public static String[] extractheader(String selectedText, String headers, String bodyText) {
-        
     	String[] ret = new String[2];
         ret[0] = ret[1] = null;
         boolean selectionTag = false;
@@ -127,18 +127,22 @@ public class ExtStringCreator {
 	            	ret[1] = matchedLine[0];
 		            }
 	        }
-	        if (!selectionTag)
-	        	// no tag
-	        if (isJSONValid(bodyText)){
-	        	// json body
+	        //bodyText = Extraction.removeNewLine(bodyText);
+	        if ((!selectionTag) && (isAlphaAndEquals(bodyText))){
+	        	// to do if body format is like- csrftoken=jndjndienifh
+	        	// currently handled in else part
+	        }
+	        if ((!selectionTag) && (isJSONValid(bodyText))){
+	        	// to do- json body
 	        }
 	        else {
+	        	
 	        	Map<String, String> query_pairs = splitQuery(bodyText);
 	        	String decodedSelectedText = URLDecoder.decode(selectedText, "UTF-8").strip();
 	        	
 	        	for (Map.Entry<String, String> query : query_pairs.entrySet()) {
 	               // Printing all elements of a Map
-	        		if (query.getKey().equals(decodedSelectedText)) {
+		        	if (query.getKey().equals(decodedSelectedText)) {
 	        			// to do
 	        		}
 	        		else if (query.getValue().equals(decodedSelectedText)) {
@@ -182,8 +186,11 @@ public class ExtStringCreator {
         if (ret[0] == null) {
             return null;
         }
-        
         return ret;
+    }
+    
+    public static boolean isAlphaAndEquals(String text) {
+        return text.matches("[a-zA-Z0-9=]+");
     }
     
     public static boolean isJSONValid(String jsonInString ) {
