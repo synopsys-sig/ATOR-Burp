@@ -3,11 +3,11 @@ ExtensionType: 1
 Name: Authentication Token Obtain and Replace
 RepoName: ator
 ScreenVersion: 2.2.0
-SerialVersion: 5
+SerialVersion: 6
 MinPlatformVersion: 0
 ProOnly: False
 Author: Synopsis-Sig
 ShortDescription: Helps automated scanning accessing/refreshing tokens, replacing tokens in XML and JSON body,replacing tokens in cookies.
-EntryPoint: target/ATOR-2.2.0-SNAPSHOT-jar-with-dependencies.jar
+EntryPoint: target/ATOR-v2.2.0-SNAPSHOT-jar-with-dependencies.jar
 BuildCommand: mvn clean install
 SupportedProducts: Pro, Community
