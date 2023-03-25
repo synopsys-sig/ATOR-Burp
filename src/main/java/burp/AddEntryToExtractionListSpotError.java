@@ -2,7 +2,6 @@ package burp;
 
 public class AddEntryToExtractionListSpotError {
 	public static void addExtractedStringToList(IBurpExtenderCallbacks callbacks) {
-		
 		String extractedName = ReplacePanel.extractionNameStringField.getText();
 		String startString = ReplacePanel.startStringField.getText();
 		String stopString = ReplacePanel.stopStringField.getText();
@@ -17,7 +16,9 @@ public class AddEntryToExtractionListSpotError {
 				(!extractionListName.equals("NA"))
 				) {
 			
-			ReplaceEntry replaceEntry = new ReplaceEntry(extractedName, extractionListName);
+			String replacementIn = ReplacePanel.replacementFlag;
+			//BurpExtender.callbacks.printOutput("replacementIn = "+replacementIn);      
+			ReplaceEntry replaceEntry = new ReplaceEntry(extractedName, extractionListName, replacementIn);
 			replaceEntry.startString = startString;
 			replaceEntry.stopString = stopString;
 			replaceEntry.selectedText = extractedString;

@@ -43,6 +43,7 @@ public class ReplacePanel {
 	public static ArrayList<MultipleErrorCondition> multipleErrorConditions = new ArrayList<MultipleErrorCondition>();
 	public static JComboBox<String> triggerConditionNameCombo = new JComboBox<String>(); 
 	public static JPanel secondscrollPanel = new JPanel();
+	public static String replacementFlag;
 	
 	BurpExtender extender;
 	public ReplacePanel(IBurpExtenderCallbacks callbacks, BurpExtender extender) {

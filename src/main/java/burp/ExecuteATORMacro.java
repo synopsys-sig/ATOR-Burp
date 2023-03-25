@@ -116,21 +116,35 @@ public class ExecuteATORMacro {
 	public static String replaceOnRequest(IHttpRequestResponse iHttpRequestResponse) {
 		String requestmsg = BurpExtender.callbacks.getHelpers().bytesToString(iHttpRequestResponse.getRequest());
 		int offset = BurpExtender.callbacks.getHelpers().analyzeRequest(iHttpRequestResponse).getBodyOffset();
+		String urlText = new String(requestmsg.split("\n")[0]);
 		String headers = requestmsg.substring(0, offset);
     	String bodyText = requestmsg.substring(offset);
-
 		for(ReplaceEntry rep: ReplacePanel.replaceEntrylist) {
+			String extracted = "Ext ERR on SPOT";
 			String extractionName = rep.getextractionName();
-			String extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
+			String replacementIn = rep.getReplacementIn();
+			// if replacement in url
+			if (replacementIn.equals("URL")){
+				extracted = Extraction.extractingDataInURL(urlText, rep.startString, rep.stopString, "Ext ERR on SPOT");
+			}
+			else {
+				extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
+			}
+
+			//BurpExtender.callbacks.printOutput("extracted "+ extracted);
 			// TODO
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
 				//BurpExtender.callbacks.printOutput("extractionName "+ extractionName);
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
 					if (value != null) {
+						//BurpExtender.callbacks.printOutput("value "+ value);
 						value = Extraction.removeemptyCharacter(value);
 						if((!extracted.equals("Ext ERR on SPOT")) || (!extracted.equals("ExtERRonSPOT"))) {
-							requestmsg = requestmsg.replace(extracted, value);		
+							//BurpExtender.callbacks.printOutput("requestmsg "+ requestmsg);
+							requestmsg = requestmsg.replace(extracted, value);
+							//BurpExtender.callbacks.printOutput("after requestmsg "+ requestmsg);
+
 					}}
 					break;
 				}

@@ -108,6 +108,18 @@ public class ExtStringCreator {
         return index;
     }
     
+    public static String[] extractUrlText (String selectedText, String urlText) {
+    	String[] ret = new String[2];
+        ret[0] = ret[1] = null;
+        String[] headersList = urlText.split(" ");
+    	ret[0] = headersList[1];
+    	ret[1] = headersList[0];
+    	//BurpExtender.callbacks.printOutput("matchedLine =" + headersList[0]);
+    	//BurpExtender.callbacks.printOutput("matchedLine 1 =" + headersList[1]);
+
+        return ret;
+    }
+    
     public static String[] extractheader(String selectedText, String headers, String bodyText) {
     	String[] ret = new String[2];
         ret[0] = ret[1] = null;
@@ -138,23 +150,42 @@ public class ExtStringCreator {
 	        else {
 	        	
 	        	Map<String, String> query_pairs = splitQuery(bodyText);
+	        	//BurpExtender.callbacks.printOutput("SelectedText " + selectedText);
+	        	// check if selected text is encoded, than only decode it here and in extraction.java 
+	        	
+	        	// why decoding selected text?
 	        	String decodedSelectedText = URLDecoder.decode(selectedText, "UTF-8").strip();
 	        	
 	        	for (Map.Entry<String, String> query : query_pairs.entrySet()) {
 	               // Printing all elements of a Map
+	        		//BurpExtender.callbacks.printOutput("query key " + query.getKey());
+	        		//BurpExtender.callbacks.printOutput("query value " + query.getValue());
+	        		//BurpExtender.callbacks.printOutput("decodedSelectedText " + decodedSelectedText);
 		        	if (query.getKey().equals(decodedSelectedText)) {
 	        			// to do
 	        		}
 	        		else if (query.getValue().equals(decodedSelectedText)) {
-	                	ret[0] = URLEncoder.encode(query.getKey(), "UTF-8").strip()+"="+URLEncoder.encode(query.getValue(), "UTF-8").strip();
+	                	ret[0] = query.getKey()+"="+query.getValue();
 	                	ret[1] = query.getKey(); //key
-	        		}	
+	        		}
+		        	else if (query.getValue().contains(decodedSelectedText)) {
+		            	String[] matchList =query.getValue().split(selectedText);
+		            	int resultSize = matchList.length;
+		            	if (resultSize >= 2) {
+		            		ret[0] = query.getKey()+"="+query.getValue();
+		            		ret[1] = query.getKey();}
+		            	else if (resultSize == 1) {
+		            		ret[0] = query.getKey()+"="+query.getValue();
+		            		ret[1] = query.getKey();;
+			            }
+		        	}
 	           }
 	        }
     	}
     	catch(Exception e) {
     		BurpExtender.callbacks.printOutput("Exception in header finding "+ e.getMessage());
     	}
+    	//BurpExtender.callbacks.printOutput("ret 0 = " +ret[0] + "ret 1 = " +ret[1]);
         return ret;
         
     }

@@ -190,8 +190,9 @@ public class ImportATOR {
 		
 		String extractedName = (String) jsonObject.get("Name");
 		String extractionListName = (String) jsonObject.get("ExtractionName");
+		String replacementIn = (String) jsonObject.get("replacementIn");
 		
-		ReplaceEntry replaceEntry = new ReplaceEntry(extractedName, extractionListName);
+		ReplaceEntry replaceEntry = new ReplaceEntry(extractedName, extractionListName, replacementIn);
 		replaceEntry.startString = (String) jsonObject.get("startString");
 		replaceEntry.stopString = (String) jsonObject.get("stopString");
 		replaceEntry.selectedText = (String) jsonObject.get("selectedText");
