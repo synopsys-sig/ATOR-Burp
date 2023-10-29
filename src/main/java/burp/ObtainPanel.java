@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -74,6 +75,10 @@ public class ObtainPanel {
         JLabel paneldescriptionstep2 = new JLabel("2. Replacement (Applicable only for chain of requests): Select the place from request, select appropriate extraction name from extraction list and add it replacement list ");
         paneldescriptionstep2.setAlignmentX(Component.LEFT_ALIGNMENT);
         paneldescriptionstep2.setBorder(new EmptyBorder(0, 0, 2, 0));
+        
+        JLabel paneldescriptionstep3 = new JLabel("3. While doing replacement, you can find prefilled value(GetOTPFromMySMS) in Pick from Extraction dropdown. This should be used for OTP replacement");
+        paneldescriptionstep3.setAlignmentX(Component.LEFT_ALIGNMENT);
+        paneldescriptionstep3.setBorder(new EmptyBorder(0, 0, 2, 0));
 		
         JPanel confPanel = new JPanel();
         confPanel.setLayout(new BoxLayout(confPanel, BoxLayout.Y_AXIS));
@@ -85,6 +90,8 @@ public class ObtainPanel {
         confPanel.add(paneldescriptionstep1);
         callbacks.customizeUiComponent(paneldescriptionstep2);
         confPanel.add(paneldescriptionstep2);
+        callbacks.customizeUiComponent(paneldescriptionstep3);
+        confPanel.add(paneldescriptionstep3);
         callbacks.customizeUiComponent(confPanel);
         
         
@@ -367,8 +374,10 @@ public class ObtainPanel {
         
         urldecodeComboBox.setPreferredSize(new Dimension(100, 40));
         urldecodeComboBox.addItem("NA");
-        urldecodeComboBox.addItem("Encode");
-        urldecodeComboBox.addItem("Decode");
+        urldecodeComboBox.addItem("URL Encode");
+        urldecodeComboBox.addItem("URL Decode");
+        urldecodeComboBox.addItem("Base64 Encode");
+        urldecodeComboBox.addItem("Base64 Decode");
         
 		extButtonsPane.add(new JLabel("Name:"));
         extButtonsPane.add(extractionNameStringField);
@@ -380,7 +389,7 @@ public class ObtainPanel {
         extractedStringField.setEditable(false);
         extButtonsPane.add(extractedStringField);
         
-        extButtonsPane.add(new JLabel("URL encode/decode:"));
+        extButtonsPane.add(new JLabel("Encode/Decode:"));
         extButtonsPane.add(urldecodeComboBox);
         
         extCreateButton = new JButton("Add");
@@ -427,6 +436,7 @@ public class ObtainPanel {
         extractionListComboBox.setPreferredSize(new Dimension(100, 40));
         extractionListComboBox.addItem("");
         extractionListComboBox.addItem("NA");
+        extractionListComboBox.addItem("GetOTPFromMySMS");
         extractionListComboBox.addItemListener(new ConfigChangedListener(ConfigActions.A_EXT_COMBO_CONFIG_CHANGED));
         
         

@@ -152,6 +152,9 @@ public class SetttingsTab {
         
         settingsTab.add("General", confPanel);
         
+        SMSConfigurationPanel smsConfigurationPanel = new SMSConfigurationPanel(callbacks);
+        settingsTab.add("SMS Configuration", smsConfigurationPanel.getSMSSettingsPanel());
+        
         return settingsTab;
     }
 	

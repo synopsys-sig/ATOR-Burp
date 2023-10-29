@@ -96,7 +96,16 @@ Idea : Record the Tiredful application request in BURP, configure the ATOR exten
 8. Do the Step7 again and check the flow
     - This time extender will not invoke the steps because existing token is valid and so it uses that.
 
- 
+## ATOR v3
+1. Base 64 encode/decode feature is added. This can be used in extraction layer.
+2. OTP validation support
+   - mysms.com app needs to be configure for this feature. Register your mobile number with this application. And use the API key, password, sendername, key and phonenumber on ATOR Settings panel.
+3. [CONFIG](config/v3)
+    - 3 apps are used here to showcase the demo. 
+    - All the config files are shared. Take this as a reference and import it to get an understanding of how we can configure ATOR.
+    - This gives you an idea about how ATOR-v3 plugin solves the authentication issue which varies from simple to complex scenario's (OAuth based)
+4. [V3 Binary](bin/ATOR-v3.0.0.jar)
+    - Please take this binary file for ATOR-v3 plugin.
 ## Built With
  
 * [SWING](https://javadoc.scijava.org/Java7/javax/swing/package-summary.html) - Used to add panel

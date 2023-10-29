@@ -1,0 +1,5 @@
+https://www.catawiki.com
+
+- Facebook OAuth login has been used to get a token
+- Multiple extraction and replacement has been configured within ATOR macro.
+- Kept the final extracted token in-memory. Those are used in subsequent requests.
