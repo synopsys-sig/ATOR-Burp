@@ -1,0 +1,5 @@
+https://app.binder.com.au/
+
+This application is used to show this simple flow.
+- Login username and password should sent as ATOR Macro. And extract session token as base64 encode
+- Use that extraction in all subsequent requests.

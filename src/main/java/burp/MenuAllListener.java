@@ -62,7 +62,6 @@ public class MenuAllListener implements ActionListener{
 				
 				PreviewPanel.ireqMessageEditor.setMessage(iHttpRequestResponse.getRequest(), true);
 				getDefaultTriggerCondition(iHttpRequestResponse);
-				
 			}
 			}
 			catch(Exception e) {
@@ -125,13 +124,23 @@ public class MenuAllListener implements ActionListener{
                 repselected = new String(this.obtainPanel.ireqMessageEditor.getSelectedData());
                 repstartStop = ExtStringCreator.getStartStopString(repselected,
                         new String(this.obtainPanel.ireqMessageEditor.getMessage()), bounds);
-               
-                
+                if (repstartStop == null) {
+                	repstartStop = ExtStringCreator.getStartStopStringAtEnd(repselected,
+                        new String(this.obtainPanel.ireqMessageEditor.getMessage()), bounds);
+                }
+
+
             }
             if (repstartStop != null) {
             	this.obtainPanel.replacementNameStringField.setText("");
             	this.obtainPanel.repstartStringField.setText(repstartStop[0]);
-            	this.obtainPanel.repstopStringField.setText(repstartStop[1]);
+            	if (repstartStop[1] != null && repstartStop[1].length() != 0) {
+            		this.obtainPanel.repstopStringField.setText(repstartStop[1]);
+            	}
+            	else {
+            		this.obtainPanel.repstopStringField.setText("EOL");
+            	}
+            	
             	this.obtainPanel.repextractedStringField.setText(repselected);
             	this.obtainPanel.extractionListComboBox.setSelectedItem("");
             }

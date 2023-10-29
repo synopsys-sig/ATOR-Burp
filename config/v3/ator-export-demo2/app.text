@@ -1,0 +1,7 @@
+https://www.catawiki.com
+
+This application is used two-step login sequence
+- Username and password has been passed as login sequence.
+- Two requests is been part of ATOR macro. 
+- Response of #req1 has to be extracted and replaced on #req2.
+- Response of #req2 has to be extracted and kept that token in-memory.
