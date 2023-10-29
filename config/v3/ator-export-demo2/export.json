@@ -1,0 +1,117 @@
+{
+    "errorConditionReplacement": {
+        "TriggerCondition": {
+            "MainCondition": "condition-1",
+            "multipleerrorcondition": []
+        },
+        "ErrorConditionReplacementList": [
+            {
+                "headerName": "Cookie:",
+                "selectedText": "QWDe0aukkvS0a5Kk2GYy0BtRRecDUMEtSpkUEV6f66G2gfUSuucPbgH86pg4iZ9CAMTxnG4OVsSUVHjx05XotvL0e5q3Ahjg9WLyCc6FfZ1Cnfqg%2FzbAoZSH1R4wmznXS7UIa9297M3vWpF%2BEvKESW7YXN6KRg%3D%3D--NdUzbywUtiCMeFnQ--mgwUawve2n%2BK0k498D%2Fv2g%3D%3D",
+                "ExtractionName": "cwp_token_res2",
+                "stopString": "EOL",
+                "startString": "cw_p=",
+                "Name": "rep_cwp_token_res2"
+            }
+        ]
+    },
+    "obtainToken": {
+        "Ator": [
+            {
+                "Comment": null,
+                "httpServiceport": 443,
+                "request": "POST \/en\/accounts\/pre_session HTTP\/2\r\nHost: www.catawiki.com\r\nContent-Length: 413\r\n\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: application\/json\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nReferer: https:\/\/www.catawiki.com\/en\/\r\nContent-Type: application\/json\r\nOrigin: https:\/\/www.catawiki.com\r\nContent-Length: 2\r\nDnt: 1\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: cors\r\nSec-Fetch-Site: same-origin\r\nTe: trailers\r\n\r\n{}",
+                "Highlight": null,
+                "response": "HTTP\/2 200 OK\r\nContent-Type: application\/json; charset=utf-8\r\nX-Frame-Options: SAMEORIGIN\r\nX-Xss-Protection: 1; mode=block\r\nX-Content-Type-Options: nosniff\r\nX-Download-Options: noopen\r\nX-Permitted-Cross-Domain-Policies: none\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nEtag: W\/\"a9647fc5b29572f9aaf834f335b8b602\"\r\nCache-Control: max-age=0, private, must-revalidate\r\nX-Request-Id: 1c89468\r\nContent-Security-Policy: child-src 'self' *.catawiki.com *.catawiki.com *.criteo.com *.criteo.net 5139330.fls.doubleclick.net bid.g.doubleclick.net blob: cdn.catawiki.net ct.pinterest.com js.stripe.com platform.twitter.com tpc.googlesyndication.com vars.hotjar.com www.facebook.com www.trustpilot.com www.youtube.com www.google.com www.recaptcha.net widget.trustpilot.com; connect-src * wss:\/\/*.catawiki.com wss:\/\/*.hotjar.com wss:\/\/*.pusher.com; default-src 'self' *.catawiki.com cdn.catawiki.net; font-src 'self' *.catawiki.com cdn.catawiki.net cdn.kustomerapp.com fonts.gstatic.com script.hotjar.com static.criteo.net; form-action 'self' *.catawiki.com www.facebook.com; frame-src *.catawiki.com *.criteo.com *.criteo.net 5139330.fls.doubleclick.net bid.g.doubleclick.net ct.pinterest.com js.stripe.com platform.twitter.com tpc.googlesyndication.com vars.hotjar.com www.facebook.com www.trustpilot.com www.youtube.com www.google.com www.recaptcha.net widget.trustpilot.com; img-src * blob: data:; media-src *.catawiki.com cdn.catawiki.net cdn.builder.io videos.ctfassets.net; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.catawiki.com *.criteo.com amplify.outbrain.com assets.pinterest.com assets.zendesk.com bat.bing.com cdn.catawiki.net cdn4.userzoom.com connect.facebook.net google-analytics.com googleads.g.doubleclick.net js.stripe.com maps.googleapis.com platform.twitter.com s.pinimg.com script.hotjar.com cdn.kustomerapp.com snap.licdn.com ssl.google-analytics.com static.criteo.net static.hotjar.com tpc.googlesyndication.com w.usabilla.com widget.trustpilot.com www.google-analytics.com www.google.com www.googleadservices.com www.googletagmanager.com www.youtube.com www.gstatic.com www.recaptcha.net www.redditstatic.com; style-src 'self' 'unsafe-inline' *.catawiki.com cdn.catawiki.net fonts.googleapis.com; worker-src 'self' *.catawiki.com blob: cdn.catawiki.net\r\nDate: Wed, 04 Oct 2023 11:28:48 GMT\r\nContent-Length: 100\r\nSet-Cookie: cw_sid=065671a2bd5052e5da2d7dd770b7a34b8693ba4695b38196c464b18e811f87ce; domain=.catawiki.com; path=\/; secure; HttpOnly\r\nSet-Cookie: cw_p=oXKANvQ4sRqw%2BUZgRGCy0BsDAbq1D9%2Fk7JIVjq79csfYQTB8AnqFjGsBDLGWFBIIRF3lrwA0jQNWALOpKFFB2fvZ7yTA%2FOqZT%2Bw0o9DhxswvCDZhd3VGqIR2H48moINnPo2JQho6r5SFY0a8ob8Mho%2FVC3HV%2Fa2mtOU%3D--LnodjJZ4OZB2mMR6--EwxWidokSBVV0CH420fF7A%3D%3D; domain=.catawiki.com; path=\/; secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload\r\n\r\n{\"token\":\"rjdY8ub1p6fdcHpl8u8Z4aHCE+10Rl3eFmpCzU1GP96\/GXadJcYgDxlFoiVPjUiAoDgUF3ZByLxnlDIHgVm9qw==\"}",
+                "Host": "https:\/\/www.catawiki.com:443",
+                "Method": "POST",
+                "httpServiceprotocol": "https",
+                "MsgID": 1,
+                "URL": "\/en\/accounts\/pre_session",
+                "httpServicehost": "www.catawiki.com"
+            },
+            {
+                "Comment": null,
+                "httpServiceport": 443,
+                "request": "POST \/en\/accounts\/signin HTTP\/2\r\nHost: www.catawiki.com\r\nCookie: cw_p=oXKANvQ4sRqw%2BUZgRGCy0BsDAbq1D9%2Fk7JIVjq79csfYQTB8AnqFjGsBDLGWFBIIRF3lrwA0jQNWALOpKFFB2fvZ7yTA%2FOqZT%2Bw0o9DhxswvCDZhd3VGqIR2H48moINnPo2JQho6r5SFY0a8ob8Mho%2FVC3HV%2Fa2mtOU%3D--LnodjJZ4OZB2mMR6--EwxWidokSBVV0CH420fF7A%3D%3D\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: application\/json\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nReferer: https:\/\/www.catawiki.com\/en\/\r\nContent-Type: application\/json\r\nX-Csrf-Token: rjdY8ub1p6fdcHpl8u8Z4aHCE+10Rl3eFmpCzU1GP96\/GXadJcYgDxlFoiVPjUiAoDgUF3ZByLxnlDIHgVm9qw==\r\nOrigin: https:\/\/www.catawiki.com\r\nContent-Length: 131\r\nDnt: 1\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: cors\r\nSec-Fetch-Site: same-origin\r\nTe: trailers\r\n\r\n{\"email\":\"textxyz@gmail.com\",\"password\":\"LasVegas123**\",\"remember_me\":false,\"funnel\":\"funnel_test\",\"call_to_action\":\"cta_test\"}",
+                "Highlight": null,
+                "response": "HTTP\/2 204 No Content\r\nX-Frame-Options: SAMEORIGIN\r\nX-Xss-Protection: 1; mode=block\r\nX-Content-Type-Options: nosniff\r\nX-Download-Options: noopen\r\nX-Permitted-Cross-Domain-Policies: none\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nCache-Control: no-cache\r\nX-Request-Id: 1c8a5d0\r\nContent-Security-Policy: child-src 'self' *.catawiki.com *.catawiki.com *.criteo.com *.criteo.net 5139330.fls.doubleclick.net bid.g.doubleclick.net blob: cdn.catawiki.net ct.pinterest.com js.stripe.com platform.twitter.com tpc.googlesyndication.com vars.hotjar.com www.facebook.com www.trustpilot.com www.youtube.com www.google.com www.recaptcha.net widget.trustpilot.com; connect-src * wss:\/\/*.catawiki.com wss:\/\/*.hotjar.com wss:\/\/*.pusher.com; default-src 'self' *.catawiki.com cdn.catawiki.net; font-src 'self' *.catawiki.com cdn.catawiki.net cdn.kustomerapp.com fonts.gstatic.com script.hotjar.com static.criteo.net; form-action 'self' *.catawiki.com www.facebook.com; frame-src *.catawiki.com *.criteo.com *.criteo.net 5139330.fls.doubleclick.net bid.g.doubleclick.net ct.pinterest.com js.stripe.com platform.twitter.com tpc.googlesyndication.com vars.hotjar.com www.facebook.com www.trustpilot.com www.youtube.com www.google.com www.recaptcha.net widget.trustpilot.com; img-src * blob: data:; media-src *.catawiki.com cdn.catawiki.net cdn.builder.io videos.ctfassets.net; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.catawiki.com *.criteo.com amplify.outbrain.com assets.pinterest.com assets.zendesk.com bat.bing.com cdn.catawiki.net cdn4.userzoom.com connect.facebook.net google-analytics.com googleads.g.doubleclick.net js.stripe.com maps.googleapis.com platform.twitter.com s.pinimg.com script.hotjar.com cdn.kustomerapp.com snap.licdn.com ssl.google-analytics.com static.criteo.net static.hotjar.com tpc.googlesyndication.com w.usabilla.com widget.trustpilot.com www.google-analytics.com www.google.com www.googleadservices.com www.googletagmanager.com www.youtube.com www.gstatic.com www.recaptcha.net www.redditstatic.com; style-src 'self' 'unsafe-inline' *.catawiki.com cdn.catawiki.net fonts.googleapis.com; worker-src 'self' *.catawiki.com blob: cdn.catawiki.net\r\nDate: Wed, 04 Oct 2023 11:29:21 GMT\r\nSet-Cookie: cw_sid=8400f14b9644fa91b30bd5e41cbfae87834e0566c649f81f635958f02560ecc3; domain=.catawiki.com; path=\/; secure; HttpOnly\r\nSet-Cookie: user_id=23054501; domain=catawiki.com; path=\/; secure\r\nSet-Cookie: user_name=user-b3518b3b9142; domain=catawiki.com; path=\/; secure\r\nSet-Cookie: logged_in=yes; domain=catawiki.com; path=\/; secure\r\nSet-Cookie: previously_logged_in=yes; domain=catawiki.com; path=\/; expires=Tue, 04 Oct 2033 11:29:21 GMT; secure\r\nSet-Cookie: cw_ab=Q1yvHmKpEe6SukpQdvbCzAAB; domain=.catawiki.com; path=\/; expires=Tue, 19 Jan 2038 03:14:07 GMT; secure\r\nSet-Cookie: cw_p=QWDe0auhkvS0a5Kk2GYy0BtRRecDUMEtSpkUEV6f66G2gfUSuucPbgH86pg4iZ9CAMTxnG4OVsSUVHjx05XotvL0e5q3Ahjg9WLyCc6FfZ1Cnfqg%2FzbAoZSH1R4wmznXS7UIa9297M3vWpF%2BEvKESW7YXN6KRg%3D%3D--NdUzbywUtiCMeFnQ--mgwUawve2n%2BK0k498D%2Fv2g%3D%3D; domain=.catawiki.com; path=\/; secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload\r\n\r\n",
+                "Host": "https:\/\/www.catawiki.com:443",
+                "Method": "POST",
+                "httpServiceprotocol": "https",
+                "MsgID": 2,
+                "URL": "\/en\/accounts\/signin",
+                "httpServicehost": "www.catawiki.com"
+            }
+        ],
+        "Replacement": [
+            {
+                "ReplacementName": "rep_cwp_token_res1",
+                "selectedtext": "oXKANvQ4sRqw%2BUZgRGCy0BsDAbq1D9%2Fk7JIVjq79csfYQTB8AnqFjGsBDLGWFBIIRF3lrwA0jQNWALOpKFFB2fvZ7yTA%2FOqZT%2Bw0o9DhxswvCDZhd3VGqIR2H48moINnPo2JQho6r5SFY0a8ob8Mho%2FVC3HV%2Fa2mtOU%3D--LnodjJZ4OZB2mMR6--EwxWidokSBVV0CH420fF7A%3D%3D",
+                "RepalcementMsgID": "2",
+                "ExtractionName": "cwp_token_res1",
+                "stopString": "\r Use",
+                "startString": "cw_p=",
+                "ExtractionMsgID": "1"
+            },
+            {
+                "ReplacementName": "rep_token_res1",
+                "selectedtext": "rjdY8ub1p6fdcHpl8u8Z4aHCE+10Rl3eFmpCzU1GP96\/GXadJcYgDxlFoiVPjUiAoDgUF3ZByLxnlDIHgVm9qw==",
+                "RepalcementMsgID": "2",
+                "ExtractionName": "token_res1",
+                "stopString": "\r Ori",
+                "startString": "Token: ",
+                "ExtractionMsgID": ""
+            }
+        ],
+        "Extraction": [
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "oXKANvQ4sRqw%2BUZgRGCy0BsDAbq1D9%2Fk7JIVjq79csfYQTB8AnqFjGsBDLGWFBIIRF3lrwA0jQNWALOpKFFB2fvZ7yTA%2FOqZT%2Bw0o9DhxswvCDZhd3VGqIR2H48moINnPo2JQho6r5SFY0a8ob8Mho%2FVC3HV%2Fa2mtOU%3D--LnodjJZ4OZB2mMR6--EwxWidokSBVV0CH420fF7A%3D%3D",
+                "stopString": "; dom",
+                "startString": "cw_p=",
+                "MsgID": "1",
+                "Name": "cwp_token_res1"
+            },
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "rjdY8ub1p6fdcHpl8u8Z4aHCE+10Rl3eFmpCzU1GP96\/GXadJcYgDxlFoiVPjUiAoDgUF3ZByLxnlDIHgVm9qw==",
+                "stopString": "\"",
+                "startString": "token\":\"",
+                "MsgID": "1",
+                "Name": "token_res1"
+            },
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "QWDe0auhkvS0a5Kk2GYy0BtRRecDUMEtSpkUEV6f66G2gfUSuucPbgH86pg4iZ9CAMTxnG4OVsSUVHjx05XotvL0e5q3Ahjg9WLyCc6FfZ1Cnfqg%2FzbAoZSH1R4wmznXS7UIa9297M3vWpF%2BEvKESW7YXN6KRg%3D%3D--NdUzbywUtiCMeFnQ--mgwUawve2n%2BK0k498D%2Fv2g%3D%3D",
+                "stopString": "; dom",
+                "startString": "cw_p=",
+                "MsgID": "2",
+                "Name": "cwp_token_res2"
+            }
+        ]
+    },
+    "errorCondition": {
+        "request": "PATCH \/accounts\/api\/v2\/users\/me HTTP\/2\r\nHost: www.catawiki.com\r\nCookie:  cw_p=QWDe0aukkvS0a5Kk2GYy0BtRRecDUMEtSpkUEV6f66G2gfUSuucPbgH86pg4iZ9CAMTxnG4OVsSUVHjx05XotvL0e5q3Ahjg9WLyCc6FfZ1Cnfqg%2FzbAoZSH1R4wmznXS7UIa9297M3vWpF%2BEvKESW7YXN6KRg%3D%3D--NdUzbywUtiCMeFnQ--mgwUawve2n%2BK0k498D%2Fv2g%3D%3D\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: *\/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nPrefer: safe\r\nReferer: https:\/\/www.catawiki.com\/en\/accounts\/settings\/account\r\nX-Csrf-Token: FFFoPeR\/U08NG8HvOXaWEDHwQ0AAF+5IXaJ+E6rC6eWFIMNWr\/K8f6cHu3vx0ysOkeKXETjqX7XsdPhGBBJ\r\nContent-Type: application\/json\r\nOrigin: https:\/\/www.catawiki.com\r\nContent-Length: 64\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: cors\r\nSec-Fetch-Site: same-origin\r\nTe: trailers\r\n\r\n{\"locale\":\"en\",\"first_name\":\"Manikandan\",\"last_name\":\"Rajappan\"}",
+        "highlight": null,
+        "protocol": "https",
+        "port": 443,
+        "response": "HTTP\/2 401 Unauthorized\r\nContent-Type: application\/json; charset=utf-8\r\nContent-Length: 98\r\nX-Frame-Options: SAMEORIGIN\r\nContent-Security-Policy: child-src 'self' *.catawiki.com *.catawiki.com *.criteo.com *.criteo.net 5139330.fls.doubleclick.net bid.g.doubleclick.net blob: cdn.catawiki.net ct.pinterest.com js.stripe.com platform.twitter.com tpc.googlesyndication.com vars.hotjar.com www.facebook.com www.trustpilot.com www.youtube.com www.google.com www.recaptcha.net widget.trustpilot.com; connect-src * wss:\/\/*.catawiki.com wss:\/\/*.hotjar.com wss:\/\/*.pusher.com; default-src 'self' *.catawiki.com cdn.catawiki.net; font-src 'self' *.catawiki.com cdn.catawiki.net cdn.kustomerapp.com fonts.gstatic.com script.hotjar.com static.criteo.net; form-action 'self' *.catawiki.com www.facebook.com; frame-src *.catawiki.com *.criteo.com *.criteo.net 5139330.fls.doubleclick.net bid.g.doubleclick.net ct.pinterest.com js.stripe.com platform.twitter.com tpc.googlesyndication.com vars.hotjar.com www.facebook.com www.trustpilot.com www.youtube.com www.google.com www.recaptcha.net widget.trustpilot.com; img-src * blob: data:; media-src *.catawiki.com cdn.catawiki.net cdn.builder.io videos.ctfassets.net; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.catawiki.com *.criteo.com amplify.outbrain.com assets.pinterest.com assets.zendesk.com bat.bing.com cdn.catawiki.net cdn4.userzoom.com connect.facebook.net google-analytics.com googleads.g.doubleclick.net js.stripe.com maps.googleapis.com platform.twitter.com s.pinimg.com script.hotjar.com cdn.kustomerapp.com snap.licdn.com ssl.google-analytics.com static.criteo.net static.hotjar.com tpc.googlesyndication.com w.usabilla.com widget.trustpilot.com www.google-analytics.com www.google.com www.googleadservices.com www.googletagmanager.com www.youtube.com www.gstatic.com www.recaptcha.net www.redditstatic.com; style-src 'self' 'unsafe-inline' *.catawiki.com cdn.catawiki.net fonts.googleapis.com; worker-src 'self' *.catawiki.com blob: cdn.catawiki.net\r\nDate: Wed, 04 Oct 2023 16:30:12 GMT\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains ; preload\r\n\r\n{\"error\":{\"code\":\"unauthorized_error\",\"message\":\"You are not authorized to perform this action.\"}}",
+        "host": "www.catawiki.com",
+        "errorconditionlist": [
+            {
+                "Category": "Status Code",
+                "Description": "ATOR will get trigger if Status Code as 401 in network flows",
+                "Value": "401",
+                "Name": "condition-1"
+            },
+            {
+                "Category": "Body",
+                "Description": "ATOR will get trigger if Body contains unauthorized_error in network flows",
+                "Value": "unauthorized_error",
+                "Name": "condition-2"
+            }
+        ],
+        "comment": null
+    }
+}

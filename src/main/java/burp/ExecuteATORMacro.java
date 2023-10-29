@@ -1,10 +1,15 @@
 package burp;
 
+import java.util.Base64;
+import java.util.concurrent.TimeUnit;
+import org.json.simple.JSONArray;
 
 public class ExecuteATORMacro {
 	IBurpExtenderCallbacks callbacks;
+	SMSToFetchOTP smsToFetchOTP = null;
 	public ExecuteATORMacro(IBurpExtenderCallbacks callbacks) {
 		this.callbacks = callbacks;
+		this.smsToFetchOTP = new SMSToFetchOTP(callbacks);
 	}
 	
 	public void executeATORMacro() {
@@ -21,6 +26,7 @@ public class ExecuteATORMacro {
 					// Replacement after extraction
 					request = request.replace(replacementPositionString, replacementString);
 				}
+
 				// make HTTP request
 				IHttpService httpService = obtainEntry.iHttpRequestResponse.getHttpService();
 				makeHttpCall(httpService, request.getBytes(), obtainEntry);
@@ -41,6 +47,9 @@ public class ExecuteATORMacro {
 				break;
 			}
 		}
+		if (extractedString.isEmpty() &&  name.equals("GetOTPFromMySMS")) {
+			extractedString = getOTP();
+		}
 		return extractedString;
 	}
 	
@@ -56,13 +65,22 @@ public class ExecuteATORMacro {
 			if(extractedvalue.length > 1) {
 				extractedString = decodeToken.getTokenValue(extractedString, extractedvalue[1]);
 			}
+			
 		}
+		
 		try {
-			if(extractionEntry.isencode_decode.equals("Decode")) {
+			if(extractionEntry.isencode_decode.equals("URL Decode")) {
 				extractedString = java.net.URLDecoder.decode(extractedString, "UTF-8");
 			}
-			else if(extractionEntry.isencode_decode.equals("Encode")) {
+			else if(extractionEntry.isencode_decode.equals("URL Encode")) {
 				extractedString = java.net.URLEncoder.encode(extractedString, "UTF-8");
+			}
+			else if(extractionEntry.isencode_decode.equals("Base64 Encode")) {
+				extractedString = Base64.getEncoder().encodeToString(extractedString.getBytes());
+			}
+			else if(extractionEntry.isencode_decode.equals("Base64 Decode")) {
+				byte[] decodedBytes = Base64.getDecoder().decode(extractedString);
+				extractedString = new String(decodedBytes);
 			}
 		}
 		catch (Exception e) {
@@ -137,5 +155,48 @@ public class ExecuteATORMacro {
 			}
 		}
 		return requestmsg;
+	}
+	
+	
+	public String getOTP() {
+		String apikey = new String(SMSConfigurationPanel.jTextFieldapikey.getPassword());
+		String password = new String(SMSConfigurationPanel.jTextFieldpassword.getPassword());
+		String key = SMSConfigurationPanel.jTextFieldsmskey.getText();
+		
+		int otpRetryCount = 0;
+		SMSToFetchOTP.MYSMS_API_KEY = apikey;
+		SMSToFetchOTP.MYSMS_PASSWORD = password;
+		if (SMSToFetchOTP.AUTH_TOKEN == null) {
+			String authToken = smsToFetchOTP.generateAuthToken(apikey,password,key);
+			if (authToken != null) {
+				SMSToFetchOTP.AUTH_TOKEN = authToken;
+			}
+		}
+		
+		String otp = getotpfromsms();
+		while(otp == null && otpRetryCount <3) {
+			otp = getotpfromsms();
+			otpRetryCount += 1;
+			try {
+				this.callbacks.printOutput("Going to wait for 30 seconds");
+				TimeUnit.SECONDS.sleep(30);
+			} catch (InterruptedException e) {
+				this.callbacks.printOutput("Exception while waiting for the message "+ e.getMessage());
+			}
+		}
+		return otp;
+	}
+	public String getotpfromsms() {
+		String sendername = SMSConfigurationPanel.jTextFieldsendername.getText();
+		Object getMessagesBySender = smsToFetchOTP.getMessageBySender(sendername);
+		if (getMessagesBySender != null) {
+			JSONArray jsonArray = (JSONArray)getMessagesBySender;
+			if (jsonArray.size() == 0) {
+				this.callbacks.printOutput("No message for this sender");
+			}
+			String message = smsToFetchOTP.getOTP(jsonArray);
+			return message;
+		}
+		return null;
 	}
 }

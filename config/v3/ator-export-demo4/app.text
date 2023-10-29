@@ -1,0 +1,4 @@
+https://github.com/TwilioDevEd/verify-v2-quickstart-node
+
+- This app is used to generate OTP
+- Register route should sent a OTP to the mentioned mobile number.

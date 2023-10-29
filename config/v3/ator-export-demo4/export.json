@@ -1,0 +1,198 @@
+{
+    "errorConditionReplacement": {
+        "TriggerCondition": {
+            "MainCondition": "condition-1",
+            "multipleerrorcondition": []
+        },
+        "ErrorConditionReplacementList": [
+            {
+                "headerName": "Cookie:",
+                "selectedText": "eyJmbGFzaCI6W10sInJldHVyblRvIjoiL3VzZXJzIiwicGFzc3BvcnQiOnt9fQ==",
+                "ExtractionName": "ses_res2",
+                "stopString": "; exp",
+                "startString": "sess=",
+                "Name": "final_ses_res2"
+            },
+            {
+                "headerName": "Cookie:",
+                "selectedText": "CspqKOGlGvbi175GCJvgB_gbl5M",
+                "ExtractionName": "sig_res2",
+                "stopString": "EOL",
+                "startString": ".sig=",
+                "Name": "final_sig_res2"
+            }
+        ]
+    },
+    "obtainToken": {
+        "Ator": [
+            {
+                "Comment": null,
+                "httpServiceport": 3000,
+                "request": "GET \/register HTTP\/1.1\r\nHost: localhost:3000\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/avif,image\/webp,*\/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nPrefer: safe\r\nConnection: close\r\nUpgrade-Insecure-Requests: 1\r\n\r\n",
+                "Highlight": null,
+                "response": "HTTP\/1.1 200 OK\r\nX-Powered-By: Express\r\nContent-Type: text\/html; charset=utf-8\r\nContent-Length: 2604\r\nETag: W\/\"a2c-eb5x5TKKLFOVhj+oEAB\/DblJgUY\"\r\nSet-Cookie: express:sess=eyJmbGFzaCI6W119; path=\/; httponly\r\nSet-Cookie: express:sess.sig=7Zq6xN_BQ7Re09WhDNVD_JVhPHo; path=\/; httponly\r\nDate: Wed, 04 Oct 2023 19:06:33 GMT\r\nConnection: close\r\n\r\n<!DOCTYPE html>\n<title>Register - Twilio Verify<\/title>\n<meta charset=\"utf-8\">\n<meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\n<script src=\"\/javascripts\/index.js\"><\/script>\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\"><a class=\"navbar-brand\" href=\"\/\">Twilio Verify<\/a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-controls=\"navbar\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"><\/span><\/button>\n  <div class=\"navbar-collapse collapse\" id=\"navbar\">\n    <ul class=\"navbar-nav mr-auto\">\n    <\/ul>\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"\/login\">Login<\/a><\/li>\n    <\/ul>\n  <\/div>\n<\/nav>\n<section class=\"content\">\n  <div class=\"container\"><br>\n  <\/div>\n  <div class=\"row justify-content-center\">\n    <div class=\"card col-lg-4\">\n      <div class=\"card-body\">\n        <h1>Register<\/h1><br>\n        <form class=\"needs-validation\" id=\"register-form\" method=\"post\" novalidate=\"\">\n          <div class=\"form-group\" id=\"username\">\n            <label for=\"username\">Username<\/label>\n            <input class=\"form-control\" name=\"username\" type=\"text\" required=\"\" placeholder=\"Username\">\n          <\/div>\n          <div class=\"form-group\" id=\"password\">\n            <label for=\"password\">Password<\/label>\n            <input class=\"form-control\" type=\"password\" name=\"password\" required=\"\" placeholder=\"Password\">\n          <\/div>\n          <div class=\"form-group\" id=\"confirmPassword\">\n            <label for=\"confirmPassword\">Password<\/label>\n            <input class=\"form-control\" type=\"password\" name=\"confirmPassword\" required=\"\" placeholder=\"Confirm Password\">\n          <\/div>\n          <div class=\"form-group\" id=\"verifyPhoneNumber\">\n            <label for=\"verifyPhoneNumber\">Phone Number<\/label>\n            <div>\n              <input class=\"form-control\" type=\"tel\" name=\"phoneNumber\" required=\"\" placeholder=\"Phone Number\">\n            <\/div><br>\n            <div class=\"form-group btn-group btn-group-toggle\" data-toggle=\"buttons\">\n              <label class=\"btn btn-secondary active\">\n                <input type=\"radio\" name=\"verificationMethod\" value=\"sms\" checked=\"\"> SMS\n              <\/label>\n              <label class=\"btn btn-secondary\">\n                <input type=\"radio\" name=\"verificationMethod\" value=\"call\"> Call\n              <\/label>\n            <\/div>\n          <\/div>\n          <button class=\"btn btn-primary btn-block\" type=\"submit\">Sign Up<\/button>\n        <\/form>\n      <\/div>\n    <\/div>\n  <\/div>\n<\/section>",
+                "Host": "http:\/\/localhost:3000",
+                "Method": "GET",
+                "httpServiceprotocol": "http",
+                "MsgID": 1,
+                "URL": "\/register",
+                "httpServicehost": "localhost"
+            },
+            {
+                "Comment": null,
+                "httpServiceport": 3000,
+                "request": "POST \/register HTTP\/1.1\r\nHost: localhost:3000\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/avif,image\/webp,*\/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nPrefer: safe\r\nContent-Type: application\/x-www-form-urlencoded\r\nContent-Length: 120\r\nOrigin: http:\/\/localhost:3000\r\nConnection: close\r\nReferer: http:\/\/localhost:3000\/register\r\nCookie: express:sess=eyJmbGFzaCI6W119; express:sess.sig=7Zq6xN_BQ7Re09WhDNVD_JVhPHo\r\nUpgrade-Insecure-Requests: 1\r\n\r\nusername=as%a.com&password=dd&confirmPassword=dd&phoneNumber=123456789004&fullPhone=%2B91123456789004&verificationMethod=sms",
+                "Highlight": null,
+                "response": "HTTP\/1.1 302 Found\r\nX-Powered-By: Express\r\nLocation: \/\r\nVary: Accept\r\nContent-Type: text\/html; charset=utf-8\r\nContent-Length: 46\r\nSet-Cookie: express:sess=eyJmbGFzaCI6W10sInBhc3Nwb3J0Ijp7InVzZXIiOjF9fQ==; path=\/; httponly\r\nSet-Cookie: express:sess.sig=CspqKOGlGvbi175GCJvgB_gbl5M; path=\/; httponly\r\nDate: Wed, 04 Oct 2023 19:06:41 GMT\r\nConnection: close\r\n\r\n<p>Found. Redirecting to <a href=\"\/\">\/<\/a><\/p>",
+                "Host": "http:\/\/localhost:3000",
+                "Method": "POST",
+                "httpServiceprotocol": "http",
+                "MsgID": 2,
+                "URL": "\/register",
+                "httpServicehost": "localhost"
+            },
+            {
+                "Comment": null,
+                "httpServiceport": 3000,
+                "request": "GET \/verify HTTP\/1.1\r\nHost: localhost:3000\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/avif,image\/webp,*\/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nPrefer: safe\r\nReferer: http:\/\/localhost:3000\/register\r\nConnection: close\r\nCookie: express:sess=eyJmbGFzaCI6W10sInBhc3Nwb3J0Ijp7InVzZXIiOjF9fQ==; express:sess.sig=CspqKOGlGvbi175GCJvgB_gbl5M\r\nUpgrade-Insecure-Requests: 1\r\n\r\n",
+                "Highlight": null,
+                "response": "HTTP\/1.1 200 OK\r\nX-Powered-By: Express\r\nContent-Type: text\/html; charset=utf-8\r\nContent-Length: 1590\r\nETag: W\/\"636-Bpix7Aei5+It\/H2Yxld9LYvHScY\"\r\nDate: Wed, 04 Oct 2023 19:06:55 GMT\r\nConnection: close\r\n\r\n<!DOCTYPE html>\n<title>Verify - Twilio Verify<\/title>\n<meta charset=\"utf-8\">\n<meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\n<script src=\"\/javascripts\/index.js\"><\/script>\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\"><a class=\"navbar-brand\" href=\"\/\">Twilio Verify<\/a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-controls=\"navbar\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"><\/span><\/button>\n  <div class=\"navbar-collapse collapse\" id=\"navbar\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"\/users\">Users<\/a><\/li>\n    <\/ul>\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item\">\n        <p class=\"navbar-text\">Welcome, as%a.com<\/p>\n      <\/li>\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"\/logout\">Log Out<\/a><\/li>\n    <\/ul>\n  <\/div>\n<\/nav>\n<section class=\"content\">\n  <div class=\"container\"><br>\n  <\/div>\n  <div class=\"row justify-content-center\">\n    <div class=\"card col-lg-4\">\n      <div class=\"card-body\">\n        <h1>Verify<\/h1><br>\n        <form class=\"needs-validation\" id=\"verify-form\" method=\"post\" novalidate=\"\">\n          <div class=\"form-group\">\n            <label for=\"verificationCode\">Verification Code<\/label>\n            <input class=\"form-control\" id=\"verificationCode\" name=\"verificationCode\" required=\"\" placeholder=\"Code\">\n          <\/div>\n          <button class=\"btn btn-primary btn-block\" type=\"submit\">Verify<\/button>\n        <\/form>\n      <\/div>\n    <\/div>\n  <\/div>\n<\/section>",
+                "Host": "http:\/\/localhost:3000",
+                "Method": "GET",
+                "httpServiceprotocol": "http",
+                "MsgID": 3,
+                "URL": "\/verify",
+                "httpServicehost": "localhost"
+            },
+            {
+                "Comment": null,
+                "httpServiceport": 3000,
+                "request": "POST \/verify HTTP\/1.1\r\nHost: localhost:3000\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/avif,image\/webp,*\/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nPrefer: safe\r\nContent-Type: application\/x-www-form-urlencoded\r\nContent-Length: 23\r\nOrigin: http:\/\/localhost:3000\r\nConnection: close\r\nReferer: http:\/\/localhost:3000\/verify\r\nCookie: express:sess=eyJmbGFzaCI6W10sInBhc3Nwb3J0Ijp7InVzZXIiOjF9fQ==; express:sess.sig=CspqKOGlGvbi175GCJvgB_gbl5M\r\nUpgrade-Insecure-Requests: 1\r\n\r\nverificationCode=848650",
+                "Highlight": null,
+                "response": "HTTP\/1.1 302 Found\r\nX-Powered-By: Express\r\nLocation: \/\r\nVary: Accept\r\nContent-Type: text\/html; charset=utf-8\r\nContent-Length: 46\r\nDate: Wed, 04 Oct 2023 19:07:27 GMT\r\nConnection: close\r\n\r\n<p>Found. Redirecting to <a href=\"\/\">\/<\/a><\/p>",
+                "Host": "http:\/\/localhost:3000",
+                "Method": "POST",
+                "httpServiceprotocol": "http",
+                "MsgID": 4,
+                "URL": "\/verify",
+                "httpServicehost": "localhost"
+            }
+        ],
+        "Replacement": [
+            {
+                "ReplacementName": "rep_ses_res1",
+                "selectedtext": "eyJmbGFzaCI6W119",
+                "RepalcementMsgID": "2",
+                "ExtractionName": "ses_res1",
+                "stopString": "; exp",
+                "startString": "sess=",
+                "ExtractionMsgID": "1"
+            },
+            {
+                "ReplacementName": "rep_sig_res1",
+                "selectedtext": "7Zq6xN_BQ7Re09WhDNVD_JVhPHo",
+                "RepalcementMsgID": "2",
+                "ExtractionName": "sig_res1",
+                "stopString": "\r Upg",
+                "startString": ".sig=",
+                "ExtractionMsgID": ""
+            },
+            {
+                "ReplacementName": "rep_ses_res2_1",
+                "selectedtext": "eyJmbGFzaCI6W10sInBhc3Nwb3J0Ijp7InVzZXIiOjF9fQ==",
+                "RepalcementMsgID": "3",
+                "ExtractionName": "ses_res2",
+                "stopString": "; exp",
+                "startString": "sess=",
+                "ExtractionMsgID": ""
+            },
+            {
+                "ReplacementName": "rep_sig_res2_1",
+                "selectedtext": "CspqKOGlGvbi175GCJvgB_gbl5M",
+                "RepalcementMsgID": "3",
+                "ExtractionName": "sig_res2",
+                "stopString": "\r Upg",
+                "startString": ".sig=",
+                "ExtractionMsgID": ""
+            },
+            {
+                "ReplacementName": "rep_ses_res2_2",
+                "selectedtext": "eyJmbGFzaCI6W10sInBhc3Nwb3J0Ijp7InVzZXIiOjF9fQ==",
+                "RepalcementMsgID": "4",
+                "ExtractionName": "ses_res2",
+                "stopString": "; exp",
+                "startString": "sess=",
+                "ExtractionMsgID": ""
+            },
+            {
+                "ReplacementName": "rep_sig_res2_2",
+                "selectedtext": "CspqKOGlGvbi175GCJvgB_gbl5M",
+                "RepalcementMsgID": "4",
+                "ExtractionName": "sig_res2",
+                "stopString": "\r Upg",
+                "startString": ".sig=",
+                "ExtractionMsgID": ""
+            },
+            {
+                "ReplacementName": "otp",
+                "selectedtext": "848650",
+                "RepalcementMsgID": "4",
+                "ExtractionName": "GetOTPFromMySMS",
+                "stopString": "EOL",
+                "startString": "Code=",
+                "ExtractionMsgID": ""
+            }
+        ],
+        "Extraction": [
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "eyJmbGFzaCI6W119",
+                "stopString": "; pat",
+                "startString": "sess=",
+                "MsgID": "1",
+                "Name": "ses_res1"
+            },
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "7Zq6xN_BQ7Re09WhDNVD_JVhPHo",
+                "stopString": "; pat",
+                "startString": ".sig=",
+                "MsgID": "1",
+                "Name": "sig_res1"
+            },
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "eyJmbGFzaCI6W10sInBhc3Nwb3J0Ijp7InVzZXIiOjF9fQ==",
+                "stopString": "; pat",
+                "startString": "sess=",
+                "MsgID": "2",
+                "Name": "ses_res2"
+            },
+            {
+                "isUrlDecode": "NA",
+                "selectedtext": "CspqKOGlGvbi175GCJvgB_gbl5M",
+                "stopString": "; pat",
+                "startString": ".sig=",
+                "MsgID": "2",
+                "Name": "sig_res2"
+            }
+        ]
+    },
+    "errorCondition": {
+        "request": "POST \/login HTTP\/1.1\r\nHost: localhost:3000\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/avif,image\/webp,*\/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nPrefer: safe\r\nContent-Type: application\/x-www-form-urlencoded\r\nContent-Length: 31\r\nOrigin: http:\/\/localhost:3000\r\nConnection: close\r\nReferer: http:\/\/localhost:3000\/login\r\nCookie: express:sess=eyJmbGFzaCI6W10sInJldHVyblRvIjoiL3VzZXJzIiwicGFzc3BvcnQiOnt9fQ==; express:sess.sig=CspqKOGlGvbi175GCJvgB_gbl5M\r\nUpgrade-Insecure-Requests: 1\r\n\r\nusername=as%a.com&password=dd",
+        "highlight": null,
+        "protocol": "http",
+        "port": 3000,
+        "response": "HTTP\/1.1 200 OK\r\nX-Powered-By: Express\r\nSet-Cookie: express:sess=eyJmbGFzaCI6W119; path=\/; httponly\r\nSet-Cookie: express:sess.sig=7Zq6xN_BQ7Re09WhDNVD_JVhPHo; path=\/; httponly\r\nContent-Type: text\/html; charset=utf-8\r\nContent-Length: 1691\r\nETag: W\/\"69b-6FpnW+TOAYz3KWMKKj313Y83p6U\"\r\nDate: Wed, 04 Oct 2023 19:07:37 GMT\r\nConnection: close\r\n\r\n<!DOCTYPE html>\n<title> - Twilio Verify<\/title>\n<meta charset=\"utf-8\">\n<meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\n<script src=\"\/javascripts\/index.js\"><\/script>\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\"><a class=\"navbar-brand\" href=\"\/\">Twilio Verify<\/a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-controls=\"navbar\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"><\/span><\/button>\n  <div class=\"navbar-collapse collapse\" id=\"navbar\">\n    <ul class=\"navbar-nav mr-auto\">\n    <\/ul>\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"\/register\">Register<\/a><\/li>\n    <\/ul>\n  <\/div>\n<\/nav>\n<section class=\"content\">\n  <div class=\"container\"><br>\n  <\/div>\n  <div class=\"row justify-content-center\">\n    <div class=\"card col-lg-4\">\n      <div class=\"card-body\">\n        <h1><\/h1><br>\n        <form class=\"needs-validation\" id=\"login-form\" method=\"post\" novalidate=\"\">\n          <div class=\"form-group\">\n            <label for=\"username\">Username<\/label>\n            <input class=\"form-control is-invalid\" id=\"username\" name=\"username\" required=\"\" placeholder=\"Username\">\n            <div class=\"invalid-feedback\">Username does not exist.<\/div>\n          <\/div>\n          <div class=\"form-group\">\n            <label for=\"password\">Password<\/label>\n            <input class=\"form-control\" id=\"password\" type=\"password\" name=\"password\" required=\"\" placeholder=\"Password\">\n          <\/div>\n          <button class=\"btn btn-primary btn-block\" type=\"submit\">Log In<\/button>\n        <\/form>\n      <\/div>\n    <\/div>\n  <\/div>\n<\/section>",
+        "host": "localhost",
+        "errorconditionlist": [
+            {
+                "Category": "Body",
+                "Description": "ATOR will get trigger if Body contains Username does not exist in network flows",
+                "Value": "Username does not exist",
+                "Name": "condition-1"
+            }
+        ],
+        "comment": null
+    }
+}

@@ -1,0 +1,63 @@
+{
+    "errorConditionReplacement": {
+        "TriggerCondition": {
+            "MainCondition": "condition-1",
+            "multipleerrorcondition": []
+        },
+        "ErrorConditionReplacementList": [
+            {
+                "headerName": "Authorization:",
+                "selectedText": "ZNNlYTBmYTctODc5MC00YzAxLTg3NGQtNmRlYTY2ZWFhOWU2",
+                "ExtractionName": "session_token_res1",
+                "stopString": "Og==",
+                "startString": "asic ",
+                "Name": "rep_session_token_res1"
+            }
+        ]
+    },
+    "obtainToken": {
+        "Ator": [
+            {
+                "Comment": null,
+                "httpServiceport": 443,
+                "request": "POST \/authentication\/Sessions HTTP\/2\r\nHost: api.binder.works\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: application\/json, text\/plain, *\/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nContent-Type: application\/json;charset=utf-8\r\nContent-Length: 72\r\nOrigin: https:\/\/app.binder.com.au\r\nDnt: 1\r\nReferer: https:\/\/app.binder.com.au\/\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: cors\r\nSec-Fetch-Site: cross-site\r\nTe: trailers\r\n\r\n{\"username\":\"testxyz@gmail.com\",\"clearTextPassword\":\"LasVegas123**\"}",
+                "Highlight": null,
+                "response": "HTTP\/2 201 Created\r\nDate: Wed, 04 Oct 2023 10:52:51 GMT\r\nContent-Type: application\/json; charset=utf-8\r\nContent-Length: 256\r\nCache-Control: no-store, must-revalidate, no-cache\r\nPragma: no-cache\r\nExpires: Wed, 04 Oct 2023 10:52:51 GMT\r\nServer: Microsoft-IIS\/10.0\r\nAccess-Control-Allow-Origin: https:\/\/app.binder.com.au\r\nAccess-Control-Allow-Credentials: true\r\nX-Aspnet-Version: 4.0.30319\r\nX-Powered-By: ASP.NET\r\nX-Frame-Options: SAMEORIGIN\r\n\r\n{\r\n  \"SessionToken\": \"fcea0fa7-8790-4c01-874d-6dea66eaa9e6\",\r\n  \"UserId\": \"619011bc-caf5-47c9-b10f-503286bcff1d\",\r\n  \"Username\": \"Manikandan\",\r\n  \"_EdocxUserId\": \"9101800000000007208\",\r\n  \"_NetworkName\": \"\",\r\n  \"_NetworkId\": \"\",\r\n  \"_NetworkPayload\": \"\"\r\n}",
+                "Host": "https:\/\/api.binder.works:443",
+                "Method": "POST",
+                "httpServiceprotocol": "https",
+                "MsgID": 1,
+                "URL": "\/authentication\/Sessions",
+                "httpServicehost": "api.binder.works"
+            }
+        ],
+        "Replacement": [],
+        "Extraction": [
+            {
+                "isUrlDecode": "Base64 Encode",
+                "selectedtext": "fcea0fa7-8790-4c01-874d-6dea66eaa9e6",
+                "stopString": "\",\r  ",
+                "startString": "SessionToken\": \"",
+                "MsgID": "1",
+                "Name": "session_token_res1"
+            }
+        ]
+    },
+    "errorCondition": {
+        "request": "PATCH \/authentication\/CurrentUser HTTP\/2\r\nHost: api.binder.works\r\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko\/20100101 Firefox\/102.0\r\nAccept: application\/json, text\/plain, *\/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nAuthorization: Basic ZNNlYTBmYTctODc5MC00YzAxLTg3NGQtNmRlYTY2ZWFhOWU2Og==\r\nSilentfail: false\r\nContent-Type: application\/json;charset=utf-8\r\nContent-Length: 60\r\nOrigin: https:\/\/app.binder.com.au\r\nDnt: 1\r\nReferer: https:\/\/app.binder.com.au\/\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: cors\r\nSec-Fetch-Site: cross-site\r\nTe: trailers\r\n\r\n{\"Name\":\"ManikandanTest\",\"Email\":\"\",\"Username\":\"Manikandan\"}",
+        "highlight": null,
+        "protocol": "https",
+        "port": 443,
+        "response": "HTTP\/2 440 Login Timeout\r\nDate: Wed, 04 Oct 2023 15:59:45 GMT\r\nContent-Type: application\/json; charset=utf-8\r\nContent-Length: 80\r\nCache-Control: private\r\nServer: Microsoft-IIS\/10.0\r\nAccess-Control-Allow-Origin: https:\/\/app.binder.com.au\r\nAccess-Control-Allow-Credentials: true\r\nX-Aspnet-Version: 4.0.30319\r\nX-Powered-By: ASP.NET\r\nX-Frame-Options: SAMEORIGIN\r\n\r\n\"Session token dÃ\u0093ea0fa7-8790-4c01-874d-6dea66eaa9e6 is invalid or unrecognised\"",
+        "host": "api.binder.works",
+        "errorconditionlist": [
+            {
+                "Category": "Status Code",
+                "Description": "ATOR will get trigger if Status Code as 440 in network flows",
+                "Value": "440",
+                "Name": "condition-1"
+            }
+        ],
+        "comment": null
+    }
+}
