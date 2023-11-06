@@ -38,7 +38,7 @@ public class ReplacePanel {
 	public static ReplaceTableModel replaceTableModel;
 	public static JButton extCreateButton;
 	public static ArrayList<ReplaceEntry> replaceEntrylist = new ArrayList<ReplaceEntry>();
-	private JCheckBox enableMultipleCondition = new JCheckBox();
+	public static JCheckBox enableMultipleCondition = new JCheckBox();
 	public static JComboBox<String> extractionreplaceComboNameList = new JComboBox<String>();
 	public static ArrayList<MultipleErrorCondition> multipleErrorConditions = new ArrayList<MultipleErrorCondition>();
 	public static JComboBox<String> triggerConditionNameCombo = new JComboBox<String>(); 
@@ -332,7 +332,7 @@ public class ReplacePanel {
 		triggerconditioninnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		BurpExtender.callbacks.customizeUiComponent(triggerconditioninnerPanel);
 		
-		JLabel triggerConditionName = new JLabel("Trigger Condition Name : ");
+		JLabel triggerConditionName = new JLabel("Other Trigger Condition : ");
 		BurpExtender.callbacks.customizeUiComponent(triggerConditionName);
 		triggerconditioninnerPanel.add(triggerConditionName);
 		

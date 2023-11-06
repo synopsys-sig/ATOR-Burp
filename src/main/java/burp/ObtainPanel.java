@@ -38,10 +38,9 @@ public class ObtainPanel {
 	public static JTextField repstartStringField, repstopStringField, repextractedStringField;
 	public static JComboBox<String> extractionListComboBox = new JComboBox<String>();
 	public static JComboBox<String> urldecodeComboBox = new JComboBox<String>();
-	public static JComboBox<String> specialIndicatorsComboBox = new JComboBox<String>();
 	public static JTextField replacementNameStringField;
 	public static JButton repCreateButton;
-	
+
 	public static ArrayList<ObtainEntry> obtainEntrylist = new ArrayList<ObtainEntry>();
 	public static ArrayList<ExtractionEntry> extractionEntrylist = new ArrayList<ExtractionEntry>();
 	public static ArrayList<ReplacementEntry> replacementEntrylist = new ArrayList<ReplacementEntry>();
@@ -371,15 +370,8 @@ public class ObtainPanel {
         urldecodeComboBox.addItem("Encode");
         urldecodeComboBox.addItem("Decode");
         
-        specialIndicatorsComboBox.setPreferredSize(new Dimension(100, 40));
-        specialIndicatorsComboBox.addItem("NA");
-        specialIndicatorsComboBox.addItem("SOB");
-        
 		extButtonsPane.add(new JLabel("Name:"));
         extButtonsPane.add(extractionNameStringField);
-        
-        extButtonsPane.add(new JLabel("Special Indicators:"));
-        extButtonsPane.add(specialIndicatorsComboBox);
         
         extButtonsPane.add(new JLabel("Start string:"));
         extButtonsPane.add(startStringField);
@@ -391,7 +383,6 @@ public class ObtainPanel {
         
         extButtonsPane.add(new JLabel("URL encode/decode:"));
         extButtonsPane.add(urldecodeComboBox);
-        
         
         extCreateButton = new JButton("Add");
         extCreateButton.addActionListener(new MenuAllListener(callbacks, MenuActions.ADD_ITEM, this));

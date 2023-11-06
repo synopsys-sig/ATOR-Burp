@@ -88,13 +88,18 @@ public class MenuAllListener implements ActionListener{
             if (this.obtainPanel.iresMessageEditor.getSelectedData() != null) {
             	
             	int[] bounds = this.obtainPanel.iresMessageEditor.getSelectionBounds();
-            	String specialIndicator = (String) ObtainPanel.specialIndicatorsComboBox.getSelectedItem();
-    			BurpExtender.callbacks.printOutput("specialIndicator "+ specialIndicator);
-
-                selected = new String(this.obtainPanel.iresMessageEditor.getSelectedData());
-                startStop = ExtStringCreator.getStartStopString(selected,
-                        new String(this.obtainPanel.iresMessageEditor.getMessage()), bounds);
-               }
+            	IRequestInfo messageInfo = BurpExtender.callbacks.getHelpers().analyzeRequest(this.obtainPanel.iresMessageEditor.getMessage());
+    			selected = new String(this.obtainPanel.iresMessageEditor.getSelectedData());
+                byte[] reqMessage = this.obtainPanel.iresMessageEditor.getMessage();
+                String requestText = BurpExtender.callbacks.getHelpers().bytesToString(reqMessage);
+                
+               	int offset = messageInfo.getBodyOffset();
+        		// Get the current selection range in the request editor
+        		int[] selectionBounds = this.obtainPanel.iresMessageEditor.getSelectionBounds();
+        		String urlText = new String(this.obtainPanel.iresMessageEditor.getMessage()).split("\n")[0].toString();
+               
+                startStop = getRequestText(selectionBounds, urlText, selected, requestText, offset);
+                 }
             if (startStop != null) {
             	this.obtainPanel.extractionNameStringField.setText("");
             	this.obtainPanel.startStringField.setText(startStop[0]);
@@ -128,6 +133,8 @@ public class MenuAllListener implements ActionListener{
             	
             	int[] bounds = this.obtainPanel.ireqMessageEditor.getSelectionBounds();
                 repselected = new String(this.obtainPanel.ireqMessageEditor.getSelectedData());
+                byte[] reqMessage = this.obtainPanel.ireqMessageEditor.getMessage();
+                String requestText = BurpExtender.callbacks.getHelpers().bytesToString(reqMessage);                
                 repstartStop = ExtStringCreator.getStartStopString(repselected,
                         new String(this.obtainPanel.ireqMessageEditor.getMessage()), bounds);
                
@@ -170,6 +177,7 @@ public class MenuAllListener implements ActionListener{
             String repextheader [] = null;
         	int[] bounds = new int[2];
         	bounds[0] = bounds[1] = 0;
+        	BurpExtender.bodyContentType = null;
             
             if (this.replacePanel.ireqMessageEditor.getSelectedData() != null) {
                 repextselected = new String(this.replacePanel.ireqMessageEditor.getSelectedData());
@@ -180,72 +188,82 @@ public class MenuAllListener implements ActionListener{
                 String headers = requestmsg.substring(0, offset);
         		
         		// Get the current selection range in the request editor
-        		int[] selectionBounds = this.replacePanel.ireqMessageEditor.getSelectionBounds();
-        		
+        		int[] selectionBounds = this.replacePanel.ireqMessageEditor.getSelectionBounds();	
         		String urlText = new String(this.replacePanel.ireqMessageEditor.getMessage()).split("\n")[0].toString();
-
-                // Find the start of the header index
         	    int headerIndex = urlText.length();
-        		
+        	    
         		// Check if the selection falls within the URL, headers, or body
         		if (selectionBounds[0] >= 0 && selectionBounds[1] >= 0) {
         		    if (selectionBounds[1] <= urlText.length()) {
         		        // Selection falls within the URL
         		    	ReplacePanel.replacementFlag = "URL";
-        		        // selected text is part of the URL, replace it
         		    	repextheader = ExtStringCreator.extractUrlText(repextselected, urlText);
         		    	bounds[0] = repextheader[0].indexOf(repextselected);
         		    	bounds[1] = bounds[0] + repextselected.length();
-        		    	//BurpExtender.callbacks.printOutput("bounds[0] = "+bounds[0] +"bounds[1] = " +bounds[1]); 
-        		    	//BurpExtender.callbacks.printOutput("Selection falls within the URL = "+repextselected);
-    	                repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
+       	                repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
     	                		repextheader[0], bounds);     
         		    }
         		    else if (selectionBounds[0] >= headerIndex && selectionBounds[1] <= offset) {
         		        // Selection falls within the headers
         		    	ReplacePanel.replacementFlag = "HEADER";
-    		        	//BurpExtender.callbacks.printOutput("Selection falls within the header = "+ repextselected);
     	            	String bodyText = requestmsg.substring(offset);
 
     	                repextheader = ExtStringCreator.extractheader(repextselected, headers, bodyText);
-    	                //BurpExtender.callbacks.printOutput("repextheader[0] = "+repextheader[0]);
     	                bounds[0] = repextheader[0].indexOf(repextselected);
     	                bounds[1] = bounds[0] + repextselected.length();
-    	                //BurpExtender.callbacks.printOutput("bounds[0] = "+bounds[0] +"bounds[1] = " +bounds[1]); 
     	                repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
     	                		repextheader[0], bounds);   
         		    } 
         		    else {
-        		        // Selection falls within the body
+        		        //Selection falls within the body
+        	            String[] lines = headers.split("\n");
+        	            for (String line : lines) {
+        	                if (line.startsWith("Content-Type:")) {
+        	                    // Extract the value after the colon and any spaces
+        	                	BurpExtender.bodyContentType = line.substring(line.indexOf(":") + 1).trim();
+        	                    break; // Exit the loop after finding the Content-Type header
+        	                }
+        	            }
+        	            
         		    	ReplacePanel.replacementFlag = "BODY";
         		        //BurpExtender.callbacks.printOutput("Selection falls within the body = "+repextselected);      
                     	String bodyText = requestmsg.substring(offset);
+                    	if (BurpExtender.bodyContentType.equals("application/json") && (ExtStringCreator.isJSONValid(bodyText))){
+                    		String[] jsonData = new String[4];
+                    		repextstartStop = new String[2];
+                    		try {
+                    			repextheader = ExtStringCreator.extractInJsonBody(bodyText, repextselected, selectionBounds);
+                    			repextstartStop[0]= repextheader[2];
+                    			repextstartStop[1]= repextheader[3];
+                    		}
+                        	catch(Exception e) {
+                        		BurpExtender.callbacks.printOutput("Exception in json body selection "+ e.getMessage());
+                        	}
+                    	}
+                    	else if (BurpExtender.bodyContentType.contains("multipart/form-data")) {
+                    		// to extract in body, take help of content type to decide data type of body
+	                    	repextheader = ExtStringCreator.extractInMultipartBody(bodyText, repextselected);	                        BurpExtender.callbacks.printOutput("repextheader[0] = "+repextheader[0]);
+	                        bounds[0] = repextheader[0].indexOf(repextselected);
+	                        bounds[1] = bounds[0] + repextselected.length();
+	                        repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
+	                        		repextheader[0], bounds);  
 
-                        repextheader = ExtStringCreator.extractheader(repextselected, headers, bodyText);
-                        //BurpExtender.callbacks.printOutput("repextheader[0] = "+repextheader[0]);
-                        bounds[0] = repextheader[0].indexOf(repextselected);
-                        bounds[1] = bounds[0] + repextselected.length();
-                        //BurpExtender.callbacks.printOutput("bounds[0] = "+bounds[0] +"bounds[1] = " +bounds[1]); 
-                        repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
-                        		repextheader[0], bounds);       
+                    	}
+                    	else {
+                    		// to extract in body, take help of content type to decide data type of body
+	                    	repextheader = ExtStringCreator.extractheader(repextselected, headers, bodyText);
+	                        bounds[0] = repextheader[0].indexOf(repextselected);
+	                        bounds[1] = bounds[0] + repextselected.length();
+	                        repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
+	                        		repextheader[0], bounds);  
+                    	}
         		    }
-        		    }
-                //ends here
-//            	String bodyText = requestmsg.substring(offset);
-//
-//                repextheader = ExtStringCreator.extractheader(repextselected, headers, bodyText);
-//                //BurpExtender.callbacks.printOutput("repextheader[0] = "+repextheader[0]);
-//                bounds[0] = repextheader[0].indexOf(repextselected);
-//                bounds[1] = bounds[0] + repextselected.length();
-//                BurpExtender.callbacks.printOutput("bounds[0] = "+bounds[0] +"bounds[1] = " +bounds[1]); 
-//                repextstartStop = ExtStringCreator.getStartStopStringAtEnd(repextselected,
-//                		repextheader[0], bounds);                
+        		    }              
             }
             if (repextstartStop != null) {
             	this.replacePanel.extractionNameStringField.setText("");
             	this.replacePanel.startStringField.setText(repextstartStop[0]);
-            	//BurpExtender.callbacks.printOutput("repextstartStop[1] = "+repextstartStop[1]);
-            	if (repextstartStop[1] != null && repextstartStop[1].length() != 0) {
+              	if (repextstartStop[1] != null && repextstartStop[1].length() != 0) {
             		this.replacePanel.stopStringField.setText(repextstartStop[1]);
             	}
             	else if (repextstartStop[0].equals("EOL")){
@@ -336,6 +354,31 @@ public class MenuAllListener implements ActionListener{
 	public void setSpotErrorCondition(IHttpRequestResponse iHttpRequestResponse) {
 		SpotErrorMetaData spotErrorMetaData = new SpotErrorMetaData(iHttpRequestResponse);
 		BurpExtender.spoterroMetaData = spotErrorMetaData;
+	}
+	
+
+	// Helper method to get the entire request as text
+	private String[] getRequestText(int[] selectionBounds, String urlText, 
+			String selectedText, String requestText, int offset) {
+    	String[] startStop = null;
+    	int headerIndex = urlText.length();
+    	String headers = requestText.substring(0, offset);
+    	
+		// Check if the selection falls within the URL, headers, or body
+		if (selectionBounds[0] >= 0 && selectionBounds[1] >= 0) {
+		    if (selectionBounds[1] <= urlText.length()) {
+		    	startStop = ObtainStartStop.startStopInHeaders(selectedText, headers, selectionBounds);  
+		    }
+		    else if (selectionBounds[0] >= headerIndex && selectionBounds[1] <= offset) {
+		        // Selection falls within the headers    
+            	startStop = ObtainStartStop.startStopInHeaders(selectedText, headers, selectionBounds);  
+		    } 
+		    else {
+		        //Selection falls within the body
+		    	  startStop = ExtStringCreator.getStartStopString(selectedText, new String(this.obtainPanel.iresMessageEditor.getMessage()), selectionBounds);
+		    }
+		}
+		return startStop;
 	}
 
 	

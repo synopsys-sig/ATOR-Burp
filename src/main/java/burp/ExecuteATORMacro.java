@@ -100,10 +100,6 @@ public class ExecuteATORMacro {
 		try {
 			byte[] byteResponse = callbacks.makeHttpRequest(host, port, useHttps, updatedRequest);
 			response = BurpExtender.callbacks.getHelpers().bytesToString(byteResponse);
-			//int offset = BurpExtender.callbacks.getHelpers().analyzeResponse(byteResponse).getBodyOffset();
-//			// testing to fetch start of body, pending
-//			String headers = response.substring(0, offset);
-//	    	String bodyText = response.substring(offset);
 	    	return response;
 		}
 		catch (Exception e) {
@@ -127,23 +123,28 @@ public class ExecuteATORMacro {
 			if (replacementIn.equals("URL")){
 				extracted = Extraction.extractingDataInURL(urlText, rep.startString, rep.stopString, "Ext ERR on SPOT");
 			}
+			else if (replacementIn.equals("BODY") &&  BurpExtender.bodyContentType.equals("application/json") ) {
+				extracted = Extraction.extractingInJsonBody(bodyText, rep.startString, rep.stopString, "EXTRACTION_ERROR");
+			}
+			else if (replacementIn.equals("BODY") &&  BurpExtender.bodyContentType.contains("multipart/form-data") ) {
+				extracted = Extraction.extractingInJsonBody(bodyText, rep.startString, rep.stopString, "EXTRACTION_ERROR");
+			}
 			else {
 				extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
 			}
 
-			//BurpExtender.callbacks.printOutput("extracted "+ extracted);
 			// TODO
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
-				//BurpExtender.callbacks.printOutput("extractionName "+ extractionName);
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
 					if (value != null) {
-						//BurpExtender.callbacks.printOutput("value "+ value);
 						value = Extraction.removeemptyCharacter(value);
 						if((!extracted.equals("Ext ERR on SPOT")) || (!extracted.equals("ExtERRonSPOT"))) {
-							//BurpExtender.callbacks.printOutput("requestmsg "+ requestmsg);
-							requestmsg = requestmsg.replace(extracted, value);
-							//BurpExtender.callbacks.printOutput("after requestmsg "+ requestmsg);
+							try {
+							requestmsg = requestmsg.replace(extracted, value);}
+							catch (Exception e) {
+								BurpExtender.callbacks.printOutput("Exception in value replacement " + e.getMessage());
+							}
 
 					}}
 					break;

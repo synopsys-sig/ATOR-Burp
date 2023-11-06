@@ -13,6 +13,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
     private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.2.0";
     public static SpotErrorMetaData spoterroMetaData = null;;
     public static IBurpExtenderCallbacks callbacks;
+	public static String bodyContentType;
     IExtensionHelpers helpers;
     JTabbedPane atorconfigurationPane, mainTabbedPane;
     JPanel errorPanel, tokenObtainPanel, replacePanel, previewPanel;
