@@ -16,8 +16,7 @@ public class AddEntryToExtractionListSpotError {
 				(!extractionListName.equals("NA"))
 				) {
 			
-			String replacementIn = ReplacePanel.replacementFlag;
-			//BurpExtender.callbacks.printOutput("replacementIn = "+replacementIn);      
+			String replacementIn = ReplacePanel.replacementFlag;      
 			ReplaceEntry replaceEntry = new ReplaceEntry(extractedName, extractionListName, replacementIn);
 			replaceEntry.startString = startString;
 			replaceEntry.stopString = stopString;

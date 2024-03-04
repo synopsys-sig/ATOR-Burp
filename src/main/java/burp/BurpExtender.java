@@ -9,8 +9,8 @@ import java.util.List;
 public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  IHttpListener {
 	
 	
-    private static String EXTENSION_NAME = "ATOR v2.2.0";
-    private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.2.0";
+    private static String EXTENSION_NAME = "ATOR v2.3.0";
+    private static String EXTENSION_NAME_TAB_NAME = "ATOR v2.3.0";
     public static SpotErrorMetaData spoterroMetaData = null;;
     public static IBurpExtenderCallbacks callbacks;
 	public static String bodyContentType;
@@ -78,7 +78,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
 			if(!(messageIsRequest) && (lockATOR)) {
 				
 				boolean isConditionMatached = CheckCondition.evaluteErrorCondition(messageInfo);
-				
 				if(isConditionMatached) {
 					lockATOR = false;
 					ExecuteATORMacro executeATORMacro = new ExecuteATORMacro(callbacks);

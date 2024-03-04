@@ -491,8 +491,6 @@ public class ObtainPanel {
         extractionTableScroll.setPreferredSize(new Dimension(240, 150));
         this.callbacks.customizeUiComponent(extractionTableScroll);
         
-        
-        
         return extractionTableScroll;
 	}
 	

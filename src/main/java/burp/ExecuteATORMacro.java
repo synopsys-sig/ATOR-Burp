@@ -72,8 +72,6 @@ public class ExecuteATORMacro {
 	}
 	
 	public void makeHttpCall(IHttpService httpService, byte[] request, ObtainEntry obtainEntry) {
-//		IHttpRequestResponse updatedHttpRequestResponse = makeCall(httpService, request);
-//		String response = callbacks.getHelpers().bytesToString(updatedHttpRequestResponse.getResponse());
 		try {
 			String response = makeCall(httpService, request);
 			for(ExtractionEntry extractionEntry: obtainEntry.extractionlistNames) {
@@ -92,6 +90,9 @@ public class ExecuteATORMacro {
 		IExtensionHelpers helpers = callbacks.getHelpers();
 		byte[] updatedRequest = Utils.checkContentLength(requestbytes, helpers);
 		String host = Utils.findheader(BurpExtender.callbacks.getHelpers().bytesToString(updatedRequest), "Host: ");
+		if (host.contains(":")) {
+			host = host.split(":")[0];
+		}
 		int port = iHttpService.getPort();
 		String protocol = iHttpService.getProtocol();
 		if (protocol.equals("https")){
@@ -133,7 +134,6 @@ public class ExecuteATORMacro {
 				extracted = Extraction.extractingDataInSpotError(headers, rep.startString, rep.stopString, rep.headerName, "Ext ERR on SPOT", bodyText);
 			}
 
-			// TODO
 			for(ExtractionEntry extractionEntry: ObtainPanel.extractionEntrylist) {
 				if(extractionEntry.getName().equals(extractionName)) {
 					String value = extractionEntry.value;
@@ -145,7 +145,6 @@ public class ExecuteATORMacro {
 							catch (Exception e) {
 								BurpExtender.callbacks.printOutput("Exception in value replacement " + e.getMessage());
 							}
-
 					}}
 					break;
 				}
