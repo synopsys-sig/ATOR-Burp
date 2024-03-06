@@ -5,11 +5,14 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class ExtStringCreator {
-    public static  int STEP = 6;
+    public static  int STEP = 8;
     public static String[] getStartStopString(String selectedText, String wholeText, int[] bounds) {
     	
     	String[] ret = new String[2];
@@ -108,6 +111,16 @@ public class ExtStringCreator {
         return index;
     }
     
+    public static String[] extractUrlText (String selectedText, String urlText) {
+    	String[] ret = new String[2];
+        ret[0] = ret[1] = null;
+        String[] headersList = urlText.split(" ");
+    	ret[0] = headersList[1];
+    	ret[1] = headersList[0];
+    	
+        return ret;
+    }
+
     public static String[] extractheader(String selectedText, String headers, String bodyText) {
     	String[] ret = new String[2];
         ret[0] = ret[1] = null;
@@ -127,13 +140,9 @@ public class ExtStringCreator {
 	            	ret[1] = matchedLine[0];
 		            }
 	        }
-	        //bodyText = Extraction.removeNewLine(bodyText);
 	        if ((!selectionTag) && (isAlphaAndEquals(bodyText))){
 	        	// to do if body format is like- csrftoken=jndjndienifh
 	        	// currently handled in else part
-	        }
-	        if ((!selectionTag) && (isJSONValid(bodyText))){
-	        	// to do- json body
 	        }
 	        else {
 	        	
@@ -148,7 +157,18 @@ public class ExtStringCreator {
 	        		else if (query.getValue().equals(decodedSelectedText)) {
 	                	ret[0] = URLEncoder.encode(query.getKey(), "UTF-8").strip()+"="+URLEncoder.encode(query.getValue(), "UTF-8").strip();
 	                	ret[1] = query.getKey(); //key
-	        		}	
+	        		}
+//                  else if (query.getValue().contains(decodedSelectedText)) {
+//                      String[] matchList =query.getValue().split(selectedText);
+//                       int resultSize = matchList.length;
+//                       if (resultSize >= 2) {
+//                               ret[0] = query.getKey()+"="+query.getValue();
+//                               ret[1] = query.getKey();}
+//                       else if (resultSize == 1) {
+//                               ret[0] = query.getKey()+"="+query.getValue();
+//                               ret[1] = query.getKey();;
+//                           }
+//                       }
 	           }
 	        }
     	}
@@ -157,6 +177,47 @@ public class ExtStringCreator {
     	}
         return ret;
         
+    }
+    
+    
+    public static String[] extractInMultipartBody(String body, String selectedText) {
+    	String[] result = new String[2];
+    	result[0] = result[1] = null;
+    	String splitString = BurpExtender.bodyContentType.split("boundary=")[1];
+        String[] parts = body.split(splitString);
+        for (String part : parts) {
+            part = part.trim();
+            if (!part.isEmpty()) {
+                if (part.contains(selectedText)) {
+                	result[0] = part;
+	            	String[] matchedLine =part.split(":");
+	            	result[1] = matchedLine[0]; //header in case of multipart body
+                }
+            }
+        }
+        return result;
+    }
+    
+    public static String[] extractInJsonBody(String bodyText, String selectedText, int[] selectionBounds) {
+    	String[] errorPanelElement = new String[4];
+    	String[] result = new String[2];
+    	result[0] = result[1] = null;
+    	errorPanelElement[0] = errorPanelElement[1] = null;
+    	errorPanelElement[2] = errorPanelElement[3] = null;
+    	try {
+    		// selection in body
+        	JSONObject jsonObject = new JSONObject(bodyText);
+        	result = JsonKeyValueExtract.findPath(jsonObject, selectedText);
+        	errorPanelElement[0] = result[1];  // selected line // some json order changed, can cause issue
+        	errorPanelElement[1] = result[0];
+        	errorPanelElement[2] = JsonKeyValueExtract.getStartString();
+        	errorPanelElement[3] = JsonKeyValueExtract.getStopString();
+            return errorPanelElement;
+    	}
+    	catch(Exception e) {
+    		BurpExtender.callbacks.printOutput("Exception in header finding "+ e.getMessage());
+    	}
+        return errorPanelElement;
     }
     public static String[] getStartStopStringAtEnd(String selectedText, String wholeText, int[] bounds) {
     	String[] ret = new String[2];

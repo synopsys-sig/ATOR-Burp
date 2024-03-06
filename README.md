@@ -1,32 +1,32 @@
 # Authentication Token Obtain and Replace Extender
-## Blogs
-
-1. [Authentication Token Obtain and Replace (ATOR) Burp Plugin - Part1 - Single step login sequence and single token extraction](https://medium.com/@kashwathkumar/authentication-token-obtain-and-replace-ator-burp-plugin-fast-and-reliable-plugin-to-handle-b19e3621c6a7 "ATOR Part 1")
-2. [Authentication Token Obtain and Replace (ATOR) Burp Plugin - Part2 - Multi step login sequence and multiple extraction](https://medium.com/@kashwathkumar/authentication-token-obtain-and-replace-ator-burp-plugin-fast-and-reliable-plugin-to-handle-1d9a0b3054e "ATOR Part 2")
 
 ## Introduction
-The plugin is created to help automated scanning using Burp in the following scenarios:
-1. Access/Refresh token
-2. Token replacement in XML,JSON body
-3. Token replacement in cookies  
-The above can be achieved using complex macro, session rules or Custom Extender in some scenarios. The rules become tricky and do not work in scenarios where the replacement text is either JSON, XML. 
+In the world of web security testing, automation is key, and no tool is more synonymous with automation than Burp Suite. However, to truly harness the power of Burp for automated scanning, you need the right plugins. That's where ATOR comes in. This open-source Burp plugin is designed to revolutionize your scanning capabilities by simplifying token management and replacement for various scenarios, including:
+1. Access and Refresh Token Management
+2. Token Replacement in XML and JSON Request Bodies
+3. Token Replacement in URL, and Cookies
+
+Traditionally, accomplishing these tasks required complex macros, session rules, or custom extenders, especially when dealing with JSON or XML data. Our plugin simplifies this process, offering several key advantages:
 
 Key advantages:
-1. We have also achieved in-memory token replacement to avoid duplicate login requests like in  both custom extender, macros/session rules. 
-2. Easy UX to help obtain data (from response) and replace data (in requests) using regex. This helps achieve complex scenarios where response body is JSON, XML and the request text is also JSON, XML, form data etc.
-3. Scan speed - the scan speed increases considerably because there are no extra login requests. There is something called the "Trigger Request" which is the error condition (also includes regex) when the login requests are triggered. The error condition can include (response code = 401 and body contains "Unauthorized request")
+1. In-Memory Token Replacement: Eliminate duplicate login requests by seamlessly replacing tokens in memory, enhancing scan efficiency.
+2. User-Friendly UX: Easily extract data from response messages and replace it in requests using regular expressions. This flexibility is invaluable for handling diverse scenarios involving JSON, XML, form data, and more.
+3. Enhanced Scan Speed: Achieve faster scan speeds by avoiding unnecessary login requests. The plugin employs a "Trigger Request" mechanism to identify error conditions, such as a response code of 401 with a body containing "Unauthorized request."
 
 The inspiration for the plugin is from ExtendedMacro plugin: https://github.com/FrUh/ExtendedMacro
 
 ## Getting Started
  
-1. Install Java and Maven 
-2. Clone the repository
-3. Run the "mvn clean install" command in cloned repo of where pom.xml is present
-4. Take the generated jar with dependencies from the target folder
+To use this plugin, follow these steps:
+
+1. Install Java and Maven.
+2. Clone this repository.
+3. Run the "mvn clean install" command in the cloned repository's directory where pom.xml is located.
+4. Retrieve the generated JAR file with dependencies from the "target" folder.
 
 ### Prerequisites
- 
+Before using the plugin, ensure the following:
+
 1. Make sure java environment is setup in your machine.
 2. Confgure the Burp Suite to listen the Proxy traffic
 3. Configure the java environment from extender tab of BURP
@@ -51,12 +51,7 @@ Totally there are 4 different ways you can specify the error condition.
 3. Error in Header: give any text from header(Example: Unauthorized)
 4. Free Form: use this to give multiple condition (st=400 && bd=Access token expired || hd=Unauthorized)
  
-### Regex with samples
 
-1. Use Authorization: Bearer \w* to match Authorization: Bearer AXXFFPPNSUSSUSSNSUSN
-2. Use Authorization: Bearer ([\w\+\_\-\.]*) to match Authorization: Bearer AXX-F+FPPNS.USSUSSNSUSN
-
- 
 ### Break down into end to end tests
 
 1. Finding the Invalid request:
@@ -106,13 +101,13 @@ Idea : Record the Tiredful application request in BURP, configure the ATOR exten
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
  
 ## Versioning
-v1.0 
+v2.0.0
  
 ## Authors
  
 * **https://github.com/FrUh/ExtendedMacro ** - *Initial work*
 
-Authors from Synopsys - Ashwath Reddy (@ka3hk) and Manikandan Rajappan (@rmanikdn)
+Synopsys
 
 
 ## License
@@ -124,17 +119,6 @@ This software is released by Synopsys under the MIT license.
 * https://github.com/FrUh/ExtendedMacro
 ExtendedMacro was a great start - we have modified the UI to handle more complex scenarios. We have also fixed bugs and improved speed by replacing tokens in memory.
 
-## Demo Video
-
-[ATOR Extender Demo Video](https://youtu.be/h1p2rvooTL0 "Demo Video")
-
-### ATOR v2.0.0:
-
-UI Panel was splitted into 4 different configuration. Check out the code from v2 or use the executable from v2/bin.
-1. Error Condition - Find the error condition req/res and add trigger condition [Can be statuscode/text in body content/text in header]. Multiple condition can also be added.
-2. Obtain Token: Find all the req/res to get the token. It can be single or multiple request (do replacement accordingly)
-3. Error Condition Replacement: Mark the trigger condition and also mark the place on request where replacement needs to taken (map the extraction)
-4. Preview: Dry run it before configure for scan.
 
   
 

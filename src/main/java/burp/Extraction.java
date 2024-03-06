@@ -49,7 +49,30 @@ public class Extraction {
         return ret;
     }
     
+    public static String extractingDataInURL(String urlText, String startString, String stopString, String ret) {
+    	String[] urlTextList = urlText.split(" ");
+    	try {
+        	int index_of_start = urlTextList[1].indexOf(startString);
+        	if (index_of_start >= 0) {
+                String tmp_part = urlTextList[1].substring(index_of_start + startString.length());
+                if (stopString.matches("EOL")){
+                	ret = tmp_part;
+                }
+                else {
+                	int index_of_stop = tmp_part.indexOf(stopString);
+                    if (index_of_stop >= 0) {
+                        ret = tmp_part.substring(0, index_of_stop); }
+                	}
+            	}
+        }
+    	catch(Exception e) {
+    		BurpExtender.callbacks.printOutput("Exception in finding from url "+ e.getMessage());
+    	}
+    	return ret;
+    }
+        
     public static String extractingDataInSpotError(String request, String startString, String stopString, String headerName, String ret, String bodyText) {
+    	// break this function to two - headers and body
     	String[] requestSplitNewLine = request.split("\\n");
     	boolean selectionTag = false;
     	try {
@@ -121,6 +144,32 @@ public class Extraction {
         return ret;
     }
     
+    public static String extractingInJsonBody(String response, String startString, String stopString, String ret) {
+		response = removeemptyCharacter(response);
+    	startString = removeemptyCharacter(startString);
+    	stopString = removeemptyCharacter(stopString);
+        int index_of_start = response.indexOf(startString);
+        int index_of_stop = 0;
+        if (index_of_start >= 0) {
+            String tmp_part = response.substring(index_of_start + startString.length());
+            if (stopString.equals("EOL"))
+            {
+            	index_of_stop = 0;
+            }
+            else {
+            	index_of_stop = tmp_part.indexOf(stopString);
+            }
+            if (index_of_stop > 0) {
+                ret = tmp_part.substring(0, index_of_stop);
+            }
+            else {
+            	ret = tmp_part;
+            }
+        }
+        return ret;
+    }
+
+    	
     public static String removeemptyCharacter(String text) {
     	text = text.replaceAll("\r", "");
     	text = text.replaceAll("\n", "");
@@ -156,7 +205,6 @@ public class Extraction {
     				nextCharAftrStart += nextChar;
     			}
     		}
-    		
     	}
     	return nextCharAftrStart + extractedString;
     }
