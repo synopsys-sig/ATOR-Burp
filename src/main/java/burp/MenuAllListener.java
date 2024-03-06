@@ -225,8 +225,7 @@ public class MenuAllListener implements ActionListener{
         	                }
         	            }
         	            
-        		    	ReplacePanel.replacementFlag = "BODY";
-        		        //BurpExtender.callbacks.printOutput("Selection falls within the body = "+repextselected);      
+        		    	ReplacePanel.replacementFlag = "BODY";    
                     	String bodyText = requestmsg.substring(offset);
                     	if (BurpExtender.bodyContentType.equals("application/json") && (ExtStringCreator.isJSONValid(bodyText))){
                     		String[] jsonData = new String[4];

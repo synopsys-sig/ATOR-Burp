@@ -195,6 +195,7 @@ public class ExportATOR {
 			jsonObject.put("startString", replaceEntry.startString);
 			jsonObject.put("stopString", replaceEntry.stopString);
 			jsonObject.put("selectedText", replaceEntry.selectedText);
+			jsonObject.put("replacementIn", replaceEntry.getReplacementIn());
 			
 			jsonArray.add(jsonObject);
 		}

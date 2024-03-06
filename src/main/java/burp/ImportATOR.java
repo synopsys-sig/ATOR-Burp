@@ -64,10 +64,6 @@ public class ImportATOR {
 		byte[] requestbyte = callbacks.getHelpers().stringToBytes(request);
 		byte[] responsebyte = callbacks.getHelpers().stringToBytes(response);
 		
-//		String host = (String) jsonObject.get("host");
-//		Long port = (Long) jsonObject.get("port");
-//		String protocol = (String) jsonObject.get("protocol");
-		
 		ErrorPanel.host = (String) jsonObject.get("host");
 		Long port = (Long) jsonObject.get("port");
 		ErrorPanel.port = port.intValue();

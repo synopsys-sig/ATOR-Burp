@@ -3,6 +3,7 @@ package burp;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
+
 public class ErrorTableModel extends AbstractTableModel{
 	private ArrayList<ErrorEntry> collection;
 	

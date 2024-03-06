@@ -3,6 +3,7 @@ package burp;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+
 public class ExtractionTable extends JTable{
 	IBurpExtenderCallbacks callbacks;
 	public ExtractionTable(TableModel model, IBurpExtenderCallbacks callbacks) {
@@ -27,6 +28,5 @@ public class ExtractionTable extends JTable{
 				break;
 			}
 		}
-		
 	}
 }

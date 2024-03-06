@@ -13,8 +13,6 @@ public class ExtractionEntry {
 		this.extractionmsgID = extractionmsgID;
 	}
 	
-	
-	
 	public String getName() {
 		return this.name;
 	}

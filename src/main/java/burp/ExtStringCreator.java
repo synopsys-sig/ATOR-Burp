@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ExtStringCreator {
     public static  int STEP = 8;
     public static String[] getStartStopString(String selectedText, String wholeText, int[] bounds) {
-    	
     	String[] ret = new String[2];
         ret[0] = ret[1] = null;
 
@@ -145,7 +144,6 @@ public class ExtStringCreator {
 	        	// currently handled in else part
 	        }
 	        else {
-	        	
 	        	Map<String, String> query_pairs = splitQuery(bodyText);
 	        	String decodedSelectedText = URLDecoder.decode(selectedText, "UTF-8").strip();
 	        	
