@@ -1,7 +1,7 @@
 # Authentication Token Obtain and Replace Extender
 
 ## Introduction
-In the world of web security testing, automation is key, and no tool is more synonymous with automation than Burp Suite. However, to truly harness the power of Burp for automated scanning, you need the right plugins. That's where ATOR comes in. This open-source Burp plugin is designed to revolutionize your scanning capabilities by simplifying token management and replacement for various scenarios, including:
+In the world of web security testing, automation is key, and Burp Suite is the go to choice. However, to truly harness the power of Burp for automated scanning, you need the right plugins. That's where ATOR comes in. This open-source Burp plugin is designed to revolutionize your scanning capabilities by simplifying token management and replacement for various scenarios, including:
 1. Access and Refresh Token Management
 2. Token Replacement in XML and JSON Request Bodies
 3. Token Replacement in URL, and Cookies
@@ -101,7 +101,7 @@ Idea : Record the Tiredful application request in BURP, configure the ATOR exten
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
  
 ## Versioning
-v2.0.0
+v2.3.0
  
 ## Authors
  
