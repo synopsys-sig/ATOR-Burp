@@ -148,7 +148,6 @@ public class ExtStringCreator {
 	        	String decodedSelectedText = URLDecoder.decode(selectedText, "UTF-8").strip();
 	        	
 	        	for (Map.Entry<String, String> query : query_pairs.entrySet()) {
-	               // Printing all elements of a Map
 		        	if (query.getKey().equals(decodedSelectedText)) {
 	        			// to do
 	        		}
