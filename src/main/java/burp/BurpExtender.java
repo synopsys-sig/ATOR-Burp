@@ -1,9 +1,15 @@
 package burp;
 
+import burp.ImportATOR;
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Map;
+import java.io.File;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 
 public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  IHttpListener {
@@ -40,8 +46,18 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab,  
         extension.append("[*] ");
         extension.append(EXTENSION_NAME);
         
+		// Load default JSON config, if available
+		ImportATOR importer = new ImportATOR(callbacks);
+		String filepath = System.getenv().get("ATOR_CONFIG_FILEPATH");
+		if(filepath != null) {
+			File f = new File(filepath);
+			if(f.exists() && !f.isDirectory()) {
+				importer.loadJSONFile(filepath);
+				callbacks.printOutput("ATOR configuration loaded successfully from " + filepath);
+			}
+		}
         callbacks.printOutput("ATOR loaded successfully");
-     }
+    }
 
 	public BurpExtender getComponent() {
 		return BurpExtender.this;

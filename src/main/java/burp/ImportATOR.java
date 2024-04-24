@@ -24,36 +24,37 @@ public class ImportATOR {
 	
 	public void readJSONFile() {
 		String filePath = null;
-        JFileChooser fileSelector = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
-        int fileChoosenState = fileSelector.showOpenDialog(null); 
-        if (fileChoosenState == JFileChooser.APPROVE_OPTION) 
-        	filePath = fileSelector.getSelectedFile().getAbsolutePath(); 
-        if(filePath != null)
-        {
-        	SetttingsTab.importATORFile.setText(filePath);
-        	JSONParser jsonParser = new JSONParser();
-         
-	        try (FileReader reader = new FileReader(filePath))
-	        {
-	        	JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
-	        	
-	        	JSONObject errorCondition = (JSONObject) jsonObject.get("errorCondition");
-	        	
-	        	parseErrorCondition(errorCondition);
-	        	
-	        	JSONObject obtainToken = (JSONObject) jsonObject.get("obtainToken");
-	        	parseObtainToken(obtainToken);
-	        	JSONObject errorConditionReplacement = (JSONObject) jsonObject.get("errorConditionReplacement");
-	        	parseErrorConditionReplacement(errorConditionReplacement);
-	        	
-	        }
-	        catch(Exception exp) {
-	        	callbacks.printOutput("Exception while importing file.."+ exp.getMessage());
-	        }
-       }
-        
+		JFileChooser fileSelector = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
+		int fileChoosenState = fileSelector.showOpenDialog(null); 
+		if (fileChoosenState == JFileChooser.APPROVE_OPTION)
+			filePath = fileSelector.getSelectedFile().getAbsolutePath(); 
+		if(filePath != null)
+		{
+			loadJSONFile(filePath);
+		}
 	}
 	
+	public void loadJSONFile(String filePath) {
+		SetttingsTab.importATORFile.setText(filePath);
+		JSONParser jsonParser = new JSONParser();
+
+		try (FileReader reader = new FileReader(filePath))
+		{
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+
+			JSONObject errorCondition = (JSONObject) jsonObject.get("errorCondition");
+
+		    parseErrorCondition(errorCondition);
+
+			JSONObject obtainToken = (JSONObject) jsonObject.get("obtainToken");
+			parseObtainToken(obtainToken);
+			JSONObject errorConditionReplacement = (JSONObject) jsonObject.get("errorConditionReplacement");
+			parseErrorConditionReplacement(errorConditionReplacement);
+	    }
+        catch(Exception exp) {
+			callbacks.printOutput("Exception while importing file.."+ exp.getMessage());
+        }
+	}
 	
 	public void parseErrorCondition(JSONObject jsonObject) {
 		
